@@ -1,0 +1,19 @@
+GuiApplication
+ - Frame createFrame
+ - Button createButton
+ - [etc.]
+ - void close
+Component
+ - getParent
+Container : Component
+ - [layout?]
+ - Component[] getChildren
+Window
+ - [title, decoration etc.]
+ - Container getContainer
+ - Dialog createDialog
+ - void show
+ - void hide
+ - void close
+Frame : Window
+Dialog : Window
