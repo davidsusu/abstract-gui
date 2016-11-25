@@ -1,0 +1,14 @@
+event handling
+layouts
+html and other content 
+  Content <- TextContent, HtmlContent, RtfContent
+    .getText()
+    .getMimeType()
+    .getContentStream()
+      setLabel(String)
+      setLabel(Content))
+      this.content.getText(), if content type is not supported
+i18n (ContentDecorator)
+basic css support (layouts?)
+value restrition (integer, email, regex etc.)
+dialog builder (with shortcut for alert, prompt, select etc.)
