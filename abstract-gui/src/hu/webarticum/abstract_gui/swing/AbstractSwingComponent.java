@@ -4,11 +4,11 @@ import hu.webarticum.abstract_gui.framework.Component;
 import hu.webarticum.abstract_gui.framework.Environment;
 
 
-public class AbstractComponent implements Component {
+abstract public class AbstractSwingComponent implements Component {
     
     private final SwingEnvironment environment;
     
-    AbstractComponent(SwingEnvironment environment) {
+    AbstractSwingComponent(SwingEnvironment environment) {
         this.environment = environment;
     }
     
@@ -16,5 +16,7 @@ public class AbstractComponent implements Component {
     public Environment getEnvironment() {
         return environment;
     }
+    
+    abstract public java.awt.Component getNativeComponent();
 
 }

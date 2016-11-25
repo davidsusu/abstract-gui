@@ -2,7 +2,6 @@ package hu.webarticum.abstract_gui.swing;
 
 import hu.webarticum.abstract_gui.framework.Environment;
 import hu.webarticum.abstract_gui.framework.Factory;
-import hu.webarticum.abstract_gui.framework.TestWindow;
 
 public class SwingFactory implements Factory {
     
@@ -18,8 +17,13 @@ public class SwingFactory implements Factory {
     }
 
     @Override
-    public TestWindow createTestWindow(String title, String buttonLabel) {
-        return new SwingTestWindow(environment, title, buttonLabel);
+    public SwingTestWindow createTestWindow(String title) {
+        return new SwingTestWindow(environment, title);
     }
+
+	@Override
+	public SwingTestButton createTestButton(String label) {
+		return new SwingTestButton(environment, label);
+	}
     
 }
