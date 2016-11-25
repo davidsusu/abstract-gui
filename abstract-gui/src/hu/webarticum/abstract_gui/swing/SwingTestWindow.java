@@ -12,14 +12,14 @@ public class SwingTestWindow extends AbstractComponent implements TestWindow {
     
     private JFrame frame;
     
-    SwingTestWindow(SwingEnvironment environment, String title) {
+    SwingTestWindow(SwingEnvironment environment, String title, String buttonLabel) {
         super(environment);
         
         frame = new JFrame(title);
         frame.setSize(300, 200);
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new BorderLayout());
-        contentPane.add(new JButton("BUTTON"), BorderLayout.CENTER);
+        contentPane.add(new JButton(buttonLabel), BorderLayout.CENTER);
     }
     
     @Override
