@@ -2,11 +2,17 @@ package hu.webarticum.abstract_gui.framework;
 
 
 public interface Factory extends EnvironmentMember {
+    
+    public Window createWindow(String title);
 
-    public TestWindow createTestWindow(String title);
+    public BorderLayout createBorderLayout();
+    
+    public Panel createPanel();
 
-    public TestButton createTestButton(String label);
+    public Panel createPanel(Layout layout);
 
-    public TestButton createTestButton(TextualContent labelContent);
+    public Button createButton(String label);
+
+    public Button createButton(TextualContent labelContent);
     
 }

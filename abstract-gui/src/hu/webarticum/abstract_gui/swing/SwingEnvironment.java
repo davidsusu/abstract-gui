@@ -13,4 +13,9 @@ public class SwingEnvironment implements Environment {
         return factory;
     }
     
+    @Override
+    public int getPriority() {
+        return PRIORITY_NORMAL;
+    }
+    
 }

@@ -1,14 +1,22 @@
+metrics (px vs. cell vs. ?)
 event handling
-layouts
-html and other content 
-  Content <- TextContent, HtmlContent, RtfContent
-    .getText()
-    .getMimeType()
-    .getContentStream()
-      setLabel(String)
-      setLabel(Content))
-      this.content.getText(), if content type is not supported
-i18n (ContentDecorator)
+layouts (wrapper vs. immutable?)
+  AbsoluteLayout
+  BorderLayout
+  LinearLayout
+  FlowLayout (?)
+  GridLayout
+i18n
+  ContentSource
+    .{add|remove}ChangeListener(ChangeListener)
+      .onChanged(...)
+        or:
+          - getSerial()
+          - call from outer
+          - ???
+    .getContent()
+advanced components (lists, menus etc.)
+complex components (complete forms etc.)
 basic css support (layouts?)
 value restrition (integer, email, regex etc.)
 dialog builder (with shortcut for alert, prompt, select etc.)
