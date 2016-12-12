@@ -5,6 +5,7 @@ import hu.webarticum.abstract_gui.framework.EnvironmentDetector;
 import hu.webarticum.abstract_gui.framework.Factory;
 import hu.webarticum.abstract_gui.framework.HtmlContent;
 import hu.webarticum.abstract_gui.framework.Panel;
+
 import hu.webarticum.abstract_gui.framework.BorderLayout;
 import hu.webarticum.abstract_gui.framework.Button;
 import hu.webarticum.abstract_gui.framework.Window;

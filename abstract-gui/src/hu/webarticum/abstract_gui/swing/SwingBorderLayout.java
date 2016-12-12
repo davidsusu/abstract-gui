@@ -30,12 +30,7 @@ public class SwingBorderLayout extends AbstractSwingLayout implements BorderLayo
 
     @Override
     public void add(Panel panel, Component component) {
-        if (!(panel instanceof SwingPanel)) {
-            throw new IllegalArgumentException("Incompatible panel type: " + panel.getClass().getSimpleName());
-        }
-        JPanel nativePanel = ((SwingPanel)panel).getNativeComponent();
-        java.awt.Component nativeComponent = ((AbstractSwingComponent)component).getNativeComponent();
-        nativePanel.add(nativeComponent, java.awt.BorderLayout.CENTER);
+        add(panel, component, AREA_CENTER);
     }
 
     @Override

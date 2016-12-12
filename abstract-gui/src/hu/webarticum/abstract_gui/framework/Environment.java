@@ -10,6 +10,8 @@ public interface Environment {
     static public final int PRIORITY_HIGH = 30;
     
     public Factory getFactory();
+
+    public boolean isAvailable();
     
     public int getPriority();
     

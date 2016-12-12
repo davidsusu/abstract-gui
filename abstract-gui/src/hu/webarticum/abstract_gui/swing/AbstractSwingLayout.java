@@ -2,7 +2,6 @@ package hu.webarticum.abstract_gui.swing;
 
 import java.awt.LayoutManager;
 
-import hu.webarticum.abstract_gui.framework.Environment;
 import hu.webarticum.abstract_gui.framework.Layout;
 
 abstract public class AbstractSwingLayout implements Layout {
@@ -14,7 +13,7 @@ abstract public class AbstractSwingLayout implements Layout {
     }
     
     @Override
-    public Environment getEnvironment() {
+    public SwingEnvironment getEnvironment() {
         return environment;
     }
     
