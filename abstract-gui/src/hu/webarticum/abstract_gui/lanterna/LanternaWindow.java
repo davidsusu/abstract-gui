@@ -25,7 +25,7 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
     
     private boolean isAttachedToScreen = false;
     
-    private final BasicWindow basicWindow;
+    private BasicWindow basicWindow = null;
     
     private LanternaPanel rootPanel;
     
@@ -37,9 +37,7 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
         super(environment);
         
         this.titleContent = titleContent;
-        basicWindow = new BasicWindow(titleContent.toString());
         rootPanel = environment.getFactory().createPanel();
-        basicWindow.setComponent(rootPanel.getNativeComponent());
     }
     
     @Override
@@ -65,6 +63,7 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
                 }
                 gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.BLUE));
                 sharedGuis.put(environment, gui);
+                basicWindow = getNativeWindow();
             }
             
             // XXX
@@ -88,6 +87,10 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
     }
     
     public BasicWindow getNativeWindow() {
+        if (basicWindow == null) {
+            basicWindow = new BasicWindow(titleContent.toString());
+            basicWindow.setComponent(rootPanel.getNativeComponent());
+        }
         return basicWindow;
     }
 
