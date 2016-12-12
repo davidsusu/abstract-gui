@@ -71,6 +71,11 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
     public LanternaPanel getRootPanel() {
         return rootPanel;
     }
+
+    @Override
+    public void refresh() {
+        rootPanel.refresh();
+    }
     
     public BasicWindow getNativeWindow() {
         return basicWindow;

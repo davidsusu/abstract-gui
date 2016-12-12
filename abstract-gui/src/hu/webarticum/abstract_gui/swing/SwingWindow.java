@@ -28,6 +28,11 @@ public class SwingWindow extends AbstractSwingEnvironmentMember implements Windo
     public SwingPanel getRootPanel() {
         return rootPanel;
     }
+
+    @Override
+    public void refresh() {
+        rootPanel.refresh();
+    }
     
     public JFrame getNativeWindow() {
         return frame;

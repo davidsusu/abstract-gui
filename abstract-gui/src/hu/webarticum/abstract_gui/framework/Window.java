@@ -7,4 +7,6 @@ public interface Window extends EnvironmentMember {
     
     public Panel getRootPanel();
     
+    public void refresh();
+    
 }

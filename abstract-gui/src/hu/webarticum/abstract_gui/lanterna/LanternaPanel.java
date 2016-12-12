@@ -1,5 +1,8 @@
 package hu.webarticum.abstract_gui.lanterna;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hu.webarticum.abstract_gui.framework.Component;
 import hu.webarticum.abstract_gui.framework.Layout;
 import hu.webarticum.abstract_gui.framework.Panel;
@@ -9,6 +12,8 @@ public class LanternaPanel extends AbstractLanternaComponent implements Panel {
     private final com.googlecode.lanterna.gui2.Panel panel;
     
     private AbstractLanternaLayout layout;
+    
+    private List<AbstractLanternaComponent> children = new ArrayList<AbstractLanternaComponent>();
     
     LanternaPanel(LanternaEnvironment environment, AbstractLanternaLayout layout) {
         super(environment);
@@ -33,6 +38,7 @@ public class LanternaPanel extends AbstractLanternaComponent implements Panel {
             throw new IllegalArgumentException("Incompatible component type: " + component.getClass().getSimpleName());
         }
         layout.add(this, component);
+        children.add((AbstractLanternaComponent)component);
     }
 
     @Override
@@ -41,12 +47,26 @@ public class LanternaPanel extends AbstractLanternaComponent implements Panel {
             throw new IllegalArgumentException("Incompatible component type: " + component.getClass().getSimpleName());
         }
         layout.add(this, component, place);
+        children.add((AbstractLanternaComponent)component);
     }
 
     @Override
     public void remove(Component component) {
         if (component instanceof AbstractLanternaComponent) {
             panel.removeComponent(((AbstractLanternaComponent)component).getNativeComponent());
+        }
+        children.remove(component);
+    }
+
+    @Override
+    public List<AbstractLanternaComponent> getChildren() {
+        return new ArrayList<AbstractLanternaComponent>(children);
+    }
+
+    @Override
+    public void refresh() {
+        for (AbstractLanternaComponent component: children) {
+            component.refresh();
         }
     }
 
