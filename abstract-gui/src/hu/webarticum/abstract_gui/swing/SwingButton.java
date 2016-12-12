@@ -16,9 +16,9 @@ public class SwingButton extends AbstractSwingComponent implements Button {
 
     private TextualContent labelContent;
     
-    List<ActionListener> actionListeners = new ArrayList<ActionListener>();
+    private List<ActionListener> actionListeners = new ArrayList<ActionListener>();
     
-    final JButton button;
+    private final JButton button;
 
     SwingButton(SwingEnvironment environment, String label) {
         this(environment, new PlainContent(label));

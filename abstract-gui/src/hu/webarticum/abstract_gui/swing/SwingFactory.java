@@ -7,7 +7,7 @@ import hu.webarticum.abstract_gui.framework.TextualContent;
 
 public class SwingFactory implements Factory {
     
-    final SwingEnvironment environment;
+    private final SwingEnvironment environment;
     
     SwingFactory(SwingEnvironment environment) {
         this.environment = environment;

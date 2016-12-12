@@ -6,7 +6,7 @@ import hu.webarticum.abstract_gui.framework.TextualContent;
 
 public class LanternaFactory implements Factory {
     
-    final LanternaEnvironment environment;
+    private final LanternaEnvironment environment;
     
     LanternaFactory(LanternaEnvironment environment) {
         this.environment = environment;

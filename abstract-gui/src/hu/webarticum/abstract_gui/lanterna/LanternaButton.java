@@ -14,9 +14,9 @@ public class LanternaButton extends AbstractLanternaComponent implements Button 
     
     private TextualContent labelContent;
     
-    List<ActionListener> actionListeners = new ArrayList<ActionListener>();
+    private List<ActionListener> actionListeners = new ArrayList<ActionListener>();
     
-    final com.googlecode.lanterna.gui2.Button button;
+    private final com.googlecode.lanterna.gui2.Button button;
     
     LanternaButton(LanternaEnvironment environment, String label) {
         this(environment, new PlainContent(label));
