@@ -5,29 +5,36 @@ import hu.webarticum.abstract_gui.framework.EnvironmentDetector;
 import hu.webarticum.abstract_gui.framework.Factory;
 import hu.webarticum.abstract_gui.framework.HtmlContent;
 import hu.webarticum.abstract_gui.framework.Panel;
+
+import java.util.Locale;
+
 import hu.webarticum.abstract_gui.framework.ActionListener;
 import hu.webarticum.abstract_gui.framework.BorderLayout;
 import hu.webarticum.abstract_gui.framework.Button;
 import hu.webarticum.abstract_gui.framework.Window;
+import hu.webarticum.abstract_gui.framework.i18n.AbstractTextRepository;
 
 public class Main {
     
     public static void main(String[] args) {
+        final TestTextRepository textRepository = new TestTextRepository();
+        
         final Environment environment = EnvironmentDetector.getDefaultEnvironment();
         final Factory factory = environment.getFactory();
-        final Window window = factory.createWindow("This is a window!");
+        final Window window = factory.createWindow(textRepository.createMlPlainContent("w1"));
         final Panel panel = window.getRootPanel();
         
-        final Button button1 = factory.createButton("Button1");
-        final Button button2 = factory.createButton("Button2");
-        final Button button3 = factory.createButton(new HtmlContent("Button3 <i>with</i> <b><u>HTML</u></b>"));
-        final Button button4 = factory.createButton("Button4");
-        final Button button5 = factory.createButton("Button5");
+        final Button button1 = factory.createButton(textRepository.createMlPlainContent("t1"));
+        final Button button2 = factory.createButton(textRepository.createMlPlainContent("t2"));
+        final Button button3 = factory.createButton(new HtmlContent("<i>Fixed</i> <b><u>button</u></b>"));
+        final Button button4 = factory.createButton(textRepository.createMlHtmlContent("h1"));
+        final Button button5 = factory.createButton("SWITCH LANG");
         
         button5.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed() {
+                textRepository.setLocale(new Locale(textRepository.getLocale().toString().equalsIgnoreCase("hu_HU") ? "en_US" : "hu_HU"));
                 window.refresh();
             }
             
@@ -40,6 +47,51 @@ public class Main {
         panel.add(button5, BorderLayout.AREA_BOTTOM);
         
         window.open();
+    }
+    
+    private static class TestTextRepository extends AbstractTextRepository {
+        
+        private Locale locale = new Locale("hu_HU");
+        
+        @Override
+        public String getText(Object key) {
+            if (locale.toString().equalsIgnoreCase("hu_HU")) {
+                if (key.equals("w1")) {
+                    return "Tesztablak";
+                } else if (key.equals("t1")) {
+                    return "Első";
+                } else if (key.equals("t2")) {
+                    return "Második";
+                } else if (key.equals("h1")) {
+                    return "HTML(<u>hu</u>)";
+                } else {
+                    return "";
+                }
+            } else {
+                if (key.equals("w1")) {
+                    return "Test window";
+                } else if (key.equals("t1")) {
+                    return "First";
+                } else if (key.equals("t2")) {
+                    return "Second";
+                } else if (key.equals("h1")) {
+                    return "HTML(<u>en</u>)";
+                } else {
+                    return "";
+                }
+            }
+        }
+
+        @Override
+        public Locale getLocale() {
+            return locale;
+        }
+
+        @Override
+        public void setLocale(Locale locale) {
+            this.locale = locale;
+        }
+        
     }
     
 }

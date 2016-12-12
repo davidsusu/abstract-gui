@@ -2,8 +2,10 @@ package hu.webarticum.abstract_gui.framework;
 
 
 public interface Factory extends EnvironmentMember {
-    
+
     public Window createWindow(String title);
+
+    public Window createWindow(TextualContent titleContent);
 
     public BorderLayout createBorderLayout();
     

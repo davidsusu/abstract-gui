@@ -23,6 +23,11 @@ public class LanternaFactory implements Factory {
     }
 
     @Override
+    public LanternaWindow createWindow(TextualContent titleContent) {
+        return new LanternaWindow(environment, titleContent);
+    }
+
+    @Override
     public LanternaBorderLayout createBorderLayout() {
         return new LanternaBorderLayout(environment);
     }

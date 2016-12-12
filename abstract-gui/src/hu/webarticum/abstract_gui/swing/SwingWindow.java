@@ -2,18 +2,27 @@ package hu.webarticum.abstract_gui.swing;
 
 import javax.swing.JFrame;
 
+import hu.webarticum.abstract_gui.framework.PlainContent;
+import hu.webarticum.abstract_gui.framework.TextualContent;
 import hu.webarticum.abstract_gui.framework.Window;
 
 public class SwingWindow extends AbstractSwingEnvironmentMember implements Window {
     
+    private TextualContent titleContent;
+    
     private final JFrame frame;
     
     private SwingPanel rootPanel;
-    
+
     SwingWindow(SwingEnvironment environment, String title) {
+        this(environment, new PlainContent(title));
+    }
+    
+    SwingWindow(SwingEnvironment environment, TextualContent titleContent) {
         super(environment);
         
-        frame = new JFrame(title);
+        this.titleContent = titleContent;
+        frame = new JFrame(titleContent.toString());
         frame.setSize(300, 200);
         rootPanel = environment.getFactory().createPanel();
         frame.setContentPane(rootPanel.getNativeComponent());
@@ -31,6 +40,7 @@ public class SwingWindow extends AbstractSwingEnvironmentMember implements Windo
 
     @Override
     public void refresh() {
+        frame.setTitle(titleContent.toString());
         rootPanel.refresh();
     }
     

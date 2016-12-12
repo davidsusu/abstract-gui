@@ -14,6 +14,8 @@ import hu.webarticum.abstract_gui.framework.TextualContent;
 
 public class SwingButton extends AbstractSwingComponent implements Button {
 
+    private TextualContent labelContent;
+    
     List<ActionListener> actionListeners = new ArrayList<ActionListener>();
     
     final JButton button;
@@ -24,6 +26,8 @@ public class SwingButton extends AbstractSwingComponent implements Button {
 
     SwingButton(SwingEnvironment environment, TextualContent labelContent) {
         super(environment);
+        
+        this.labelContent = labelContent;
         if (labelContent.isPlain()) {
             String labelText = labelContent.toString();
             this.button = new JButton(labelText.matches("^<html") ? " " + labelText : labelText);
@@ -54,8 +58,12 @@ public class SwingButton extends AbstractSwingComponent implements Button {
 
     @Override
     public void refresh() {
-        // TODO
-        System.out.println("REFRESH BUTTON!");
+        if (labelContent.isPlain()) {
+            String labelText = labelContent.toString();
+            button.setText(labelText.matches("^<html") ? " " + labelText : labelText);
+        } else {
+            button.setText("<html>" + labelContent.toHtml() + "</html>");
+        }
     }
 
     @Override

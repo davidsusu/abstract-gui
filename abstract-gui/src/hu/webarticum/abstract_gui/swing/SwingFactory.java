@@ -24,6 +24,11 @@ public class SwingFactory implements Factory {
     }
 
     @Override
+    public SwingWindow createWindow(TextualContent titleContent) {
+        return new SwingWindow(environment, titleContent);
+    }
+
+    @Override
     public SwingBorderLayout createBorderLayout() {
         return new SwingBorderLayout(environment);
     }

@@ -13,9 +13,13 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
+import hu.webarticum.abstract_gui.framework.PlainContent;
+import hu.webarticum.abstract_gui.framework.TextualContent;
 import hu.webarticum.abstract_gui.framework.Window;
 
 public class LanternaWindow extends AbstractLanternaEnvironmentMember implements Window {
+
+    private TextualContent titleContent;
     
     static private Map<LanternaEnvironment, MultiWindowTextGUI> sharedGuis = new HashMap<LanternaEnvironment, MultiWindowTextGUI>();
     
@@ -26,9 +30,14 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
     private LanternaPanel rootPanel;
     
     LanternaWindow(LanternaEnvironment environment, String title) {
+        this(environment, new PlainContent(title));
+    }
+    
+    LanternaWindow(LanternaEnvironment environment, TextualContent titleContent) {
         super(environment);
         
-        basicWindow = new BasicWindow(title);
+        this.titleContent = titleContent;
+        basicWindow = new BasicWindow(titleContent.toString());
         rootPanel = environment.getFactory().createPanel();
         basicWindow.setComponent(rootPanel.getNativeComponent());
     }
@@ -74,6 +83,7 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
 
     @Override
     public void refresh() {
+        basicWindow.setTitle(titleContent.toString());
         rootPanel.refresh();
     }
     

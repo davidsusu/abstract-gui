@@ -12,6 +12,8 @@ import hu.webarticum.abstract_gui.framework.TextualContent;
 
 public class LanternaButton extends AbstractLanternaComponent implements Button {
     
+    private TextualContent labelContent;
+    
     List<ActionListener> actionListeners = new ArrayList<ActionListener>();
     
     final com.googlecode.lanterna.gui2.Button button;
@@ -23,6 +25,7 @@ public class LanternaButton extends AbstractLanternaComponent implements Button 
     LanternaButton(LanternaEnvironment environment, TextualContent labelContent) {
         super(environment);
         
+        this.labelContent = labelContent;
         button = new com.googlecode.lanterna.gui2.Button(labelContent.toString(), new Runnable() {
             
             @Override
@@ -47,8 +50,7 @@ public class LanternaButton extends AbstractLanternaComponent implements Button 
 
     @Override
     public void refresh() {
-        // TODO
-        System.out.println("REFRESH BUTTON!");
+        button.setLabel(labelContent.toString());
     }
 
     @Override
