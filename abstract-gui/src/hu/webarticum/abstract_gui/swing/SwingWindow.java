@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 import hu.webarticum.abstract_gui.framework.Window;
 
-public class SwingWindow extends AbstractSwingComponent implements Window {
+public class SwingWindow extends AbstractSwingEnvironmentMember implements Window {
     
     private final JFrame frame;
     
@@ -29,8 +29,7 @@ public class SwingWindow extends AbstractSwingComponent implements Window {
         return rootPanel;
     }
     
-    @Override
-    public java.awt.Component getNativeComponent() {
+    public JFrame getNativeWindow() {
         return frame;
     }
     

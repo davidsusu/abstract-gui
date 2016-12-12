@@ -6,8 +6,6 @@ import java.util.Map;
 
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.gui2.BasicWindow;
-import com.googlecode.lanterna.gui2.Component;
-import com.googlecode.lanterna.gui2.Composite;
 import com.googlecode.lanterna.gui2.DefaultWindowManager;
 import com.googlecode.lanterna.gui2.EmptySpace;
 import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
@@ -17,7 +15,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
 import hu.webarticum.abstract_gui.framework.Window;
 
-public class LanternaWindow extends AbstractLanternaComponent implements Window {
+public class LanternaWindow extends AbstractLanternaEnvironmentMember implements Window {
     
     static private Map<LanternaEnvironment, MultiWindowTextGUI> sharedGuis = new HashMap<LanternaEnvironment, MultiWindowTextGUI>();
     
@@ -73,14 +71,8 @@ public class LanternaWindow extends AbstractLanternaComponent implements Window 
     public LanternaPanel getRootPanel() {
         return rootPanel;
     }
-
-    // XXX
-    @Override
-    public Component getNativeComponent() {
-        return null;
-    }
     
-    public Composite getNativeComposite() {
+    public BasicWindow getNativeWindow() {
         return basicWindow;
     }
 
