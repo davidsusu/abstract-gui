@@ -32,13 +32,13 @@ public class SwingEnvironment implements Environment {
             if ((boolean)(Boolean)result) {
                 return false;
             }
-        } catch(ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             return false;
-        } catch(NoSuchMethodException e) {
+        } catch (NoSuchMethodException e) {
             return false;
-        } catch(InvocationTargetException e) {
+        } catch (InvocationTargetException e) {
             return false;
-        } catch(IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             return false;
         }
         return true;
