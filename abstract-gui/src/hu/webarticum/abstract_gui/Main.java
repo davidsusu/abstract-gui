@@ -13,6 +13,7 @@ import hu.webarticum.abstract_gui.framework.BorderLayout;
 import hu.webarticum.abstract_gui.framework.Button;
 import hu.webarticum.abstract_gui.framework.Window;
 import hu.webarticum.abstract_gui.framework.i18n.AbstractTextRepository;
+import hu.webarticum.abstract_gui.framework.i18n.FormatHtmlContent;
 
 public class Main {
     
@@ -26,9 +27,9 @@ public class Main {
         
         final Button button1 = factory.createButton(textRepository.createMlPlainContent("t1"));
         final Button button2 = factory.createButton(textRepository.createMlPlainContent("t2"));
-        final Button button3 = factory.createButton(new HtmlContent("<i>Fixed</i> <b><u>button</u></b>"));
-        final Button button4 = factory.createButton(textRepository.createMlHtmlContent("h1"));
-        final Button button5 = factory.createButton("SWITCH LANG");
+        final Button button3 = factory.createButton(new HtmlContent("<i><u>FIX</u></i>"));
+        final Button button4 = factory.createButton(new FormatHtmlContent(textRepository.createMlHtmlContent("h1"), "fix"));
+        final Button button5 = factory.createButton(textRepository.createMlHtmlContent("h2"));
         
         button5.addActionListener(new ActionListener() {
             
@@ -63,7 +64,9 @@ public class Main {
                 } else if (key.equals("t2")) {
                     return "Második";
                 } else if (key.equals("h1")) {
-                    return "HTML(<u>hu</u>)";
+                    return "HU (<u>%s</u>)";
+                } else if (key.equals("h2")) {
+                    return "<i>Nyelv váltása</i>";
                 } else {
                     return "";
                 }
@@ -75,7 +78,9 @@ public class Main {
                 } else if (key.equals("t2")) {
                     return "Second";
                 } else if (key.equals("h1")) {
-                    return "HTML(<u>en</u>)";
+                    return "EN (<u>%s</u>)";
+                } else if (key.equals("h2")) {
+                    return "<i>Switch language</i>";
                 } else {
                     return "";
                 }
