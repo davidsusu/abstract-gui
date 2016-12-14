@@ -14,5 +14,9 @@ public interface Environment {
     public boolean isAvailable();
     
     public int getPriority();
+
+    public void invokeLater(Runnable runnable);
+
+    public void invokeAndWait(Runnable runnable) throws InterruptedException;
     
 }

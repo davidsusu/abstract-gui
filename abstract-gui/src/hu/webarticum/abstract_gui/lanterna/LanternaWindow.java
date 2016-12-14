@@ -1,17 +1,7 @@
 package hu.webarticum.abstract_gui.lanterna;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.gui2.BasicWindow;
-import com.googlecode.lanterna.gui2.DefaultWindowManager;
-import com.googlecode.lanterna.gui2.EmptySpace;
 import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
-import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
 import hu.webarticum.abstract_gui.framework.PlainContent;
 import hu.webarticum.abstract_gui.framework.TextualContent;
@@ -20,8 +10,6 @@ import hu.webarticum.abstract_gui.framework.Window;
 public class LanternaWindow extends AbstractLanternaEnvironmentMember implements Window {
 
     private TextualContent titleContent;
-    
-    static private Map<LanternaEnvironment, MultiWindowTextGUI> sharedGuis = new HashMap<LanternaEnvironment, MultiWindowTextGUI>();
     
     private boolean isAttachedToScreen = false;
     
@@ -43,28 +31,8 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
     @Override
     public void open() {
         if (!isAttachedToScreen) {
-            LanternaEnvironment environment = getEnvironment();
-            MultiWindowTextGUI gui;
-            if (sharedGuis.containsKey(environment)) {
-                gui = sharedGuis.get(environment);
-            } else {
-                Screen screen;
-                try {
-                    screen = new TerminalScreen(new DefaultTerminalFactory().createTerminal());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
-                }
-                try {
-                    screen.startScreen();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
-                }
-                gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.BLUE));
-                sharedGuis.put(environment, gui);
-                basicWindow = getNativeWindow();
-            }
+            MultiWindowTextGUI gui = getEnvironment().getGui();
+            basicWindow = getNativeWindow();
             
             // XXX
             gui.addWindowAndWait(basicWindow);

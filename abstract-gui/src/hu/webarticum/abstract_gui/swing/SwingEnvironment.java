@@ -3,6 +3,8 @@ package hu.webarticum.abstract_gui.swing;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import javax.swing.SwingUtilities;
+
 import hu.webarticum.abstract_gui.framework.Environment;
 
 public class SwingEnvironment implements Environment {
@@ -45,6 +47,20 @@ public class SwingEnvironment implements Environment {
     @Override
     public int getPriority() {
         return PRIORITY_NORMAL;
+    }
+
+    @Override
+    public void invokeLater(Runnable runnable) {
+        SwingUtilities.invokeLater(runnable);
+    }
+
+    @Override
+    public void invokeAndWait(Runnable runnable) throws InterruptedException {
+        try {
+            SwingUtilities.invokeAndWait(runnable);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
     
 }
