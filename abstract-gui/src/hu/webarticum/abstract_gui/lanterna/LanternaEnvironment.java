@@ -16,6 +16,13 @@ public class LanternaEnvironment implements Environment {
 
     private MultiWindowTextGUI gui = null;
     
+    public LanternaEnvironment() {
+    }
+    
+    public LanternaEnvironment(MultiWindowTextGUI gui) {
+        this.gui = gui;
+    }
+    
     @Override
     public LanternaFactory getFactory() {
         return new LanternaFactory(this);
