@@ -4,7 +4,9 @@ import hu.webarticum.abstract_gui.framework.Environment;
 import hu.webarticum.abstract_gui.framework.EnvironmentDetector;
 import hu.webarticum.abstract_gui.framework.Factory;
 import hu.webarticum.abstract_gui.framework.HtmlContent;
+import hu.webarticum.abstract_gui.framework.Label;
 import hu.webarticum.abstract_gui.framework.Panel;
+import hu.webarticum.abstract_gui.framework.TextField;
 
 import java.util.Locale;
 
@@ -22,16 +24,20 @@ public class Main {
         
         final Environment environment = EnvironmentDetector.getDefaultEnvironment();
         final Factory factory = environment.getFactory();
-        final Window window = factory.createWindow(textRepository.createMlPlainContent("w1"));
+        final Window window = factory.createWindow(textRepository.createMlPlainContent("windowtitle"));
         final Panel panel = window.getRootPanel();
         
-        final Button button1 = factory.createButton(textRepository.createMlPlainContent("t1"));
-        final Button button2 = factory.createButton(textRepository.createMlPlainContent("t2"));
-        final Button button3 = factory.createButton(new HtmlContent("<i><u>FIX</u></i>"));
-        final Button button4 = factory.createButton(new FormatHtmlContent(textRepository.createMlHtmlContent("h1"), "fix"));
-        final Button button5 = factory.createButton(textRepository.createMlHtmlContent("h2"));
+        final Label topLabel = factory.createLabel(textRepository.createMlPlainContent("toplabel"));
         
-        button5.addActionListener(new ActionListener() {
+        final Button aButton = factory.createButton(new HtmlContent("<i><u>FIX</u></i>"));
+
+        final TextField inputField = factory.createTextField();
+        inputField.setValue("initial");
+        
+        final Button anOtherButton = factory.createButton(new FormatHtmlContent(textRepository.createMlHtmlContent("patterntext"), "fix"));
+        
+        final Button langSwitcherButton = factory.createButton(textRepository.createMlHtmlContent("switchlang"));
+        langSwitcherButton.addActionListener(new ActionListener() {
             
             @Override
             public void actionPerformed() {
@@ -41,11 +47,11 @@ public class Main {
             
         });
 
-        panel.add(button1, BorderLayout.AREA_TOP);
-        panel.add(button2, BorderLayout.AREA_LEFT);
-        panel.add(button3, BorderLayout.AREA_CENTER);
-        panel.add(button4, BorderLayout.AREA_RIGHT);
-        panel.add(button5, BorderLayout.AREA_BOTTOM);
+        panel.add(topLabel, BorderLayout.AREA_TOP);
+        panel.add(aButton, BorderLayout.AREA_LEFT);
+        panel.add(inputField, BorderLayout.AREA_CENTER);
+        panel.add(anOtherButton, BorderLayout.AREA_RIGHT);
+        panel.add(langSwitcherButton, BorderLayout.AREA_BOTTOM);
         
         window.open();
     }
@@ -57,29 +63,25 @@ public class Main {
         @Override
         public String getText(Object key) {
             if (locale.toString().equalsIgnoreCase("hu_HU")) {
-                if (key.equals("w1")) {
+                if (key.equals("windowtitle")) {
                     return "Tesztablak";
-                } else if (key.equals("t1")) {
-                    return "Első";
-                } else if (key.equals("t2")) {
-                    return "Második";
-                } else if (key.equals("h1")) {
+                } else if (key.equals("toplabel")) {
+                    return "Felső szöveg";
+                } else if (key.equals("patterntext")) {
                     return "HU (<u>%s</u>)";
-                } else if (key.equals("h2")) {
+                } else if (key.equals("switchlang")) {
                     return "<i>Nyelv váltása</i>";
                 } else {
                     return "";
                 }
             } else {
-                if (key.equals("w1")) {
+                if (key.equals("windowtitle")) {
                     return "Test window";
-                } else if (key.equals("t1")) {
-                    return "First";
-                } else if (key.equals("t2")) {
-                    return "Second";
-                } else if (key.equals("h1")) {
+                } else if (key.equals("toplabel")) {
+                    return "Top label";
+                } else if (key.equals("patterntext")) {
                     return "EN (<u>%s</u>)";
-                } else if (key.equals("h2")) {
+                } else if (key.equals("switchlang")) {
                     return "<i>Switch language</i>";
                 } else {
                     return "";

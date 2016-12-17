@@ -16,5 +16,11 @@ public interface Factory extends EnvironmentMember {
     public Button createButton(String label);
 
     public Button createButton(TextualContent labelContent);
+
+    public Label createLabel(String label);
+
+    public Label createLabel(TextualContent labelContent);
+
+    public TextField createTextField();
     
 }

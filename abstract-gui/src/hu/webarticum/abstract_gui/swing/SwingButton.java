@@ -1,6 +1,5 @@
 package hu.webarticum.abstract_gui.swing;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +27,7 @@ public class SwingButton extends AbstractSwingComponent implements Button {
         super(environment);
         
         this.labelContent = labelContent;
-        if (labelContent.isPlain()) {
-            String labelText = labelContent.toString();
-            this.button = new JButton(labelText.matches("^<html") ? " " + labelText : labelText);
-        } else {
-            this.button = new JButton("<html>" + labelContent.toHtml() + "</html>");
-        }
+        this.button = new JButton(contentToLabelString(labelContent));
         this.button.addActionListener(new java.awt.event.ActionListener() {
             
             @Override
@@ -58,16 +52,11 @@ public class SwingButton extends AbstractSwingComponent implements Button {
 
     @Override
     public void refresh() {
-        if (labelContent.isPlain()) {
-            String labelText = labelContent.toString();
-            button.setText(labelText.matches("^<html") ? " " + labelText : labelText);
-        } else {
-            button.setText("<html>" + labelContent.toHtml() + "</html>");
-        }
+        button.setText(contentToLabelString(labelContent));
     }
 
     @Override
-    public Component getNativeComponent() {
+    public JButton getNativeComponent() {
         return button;
     }
     

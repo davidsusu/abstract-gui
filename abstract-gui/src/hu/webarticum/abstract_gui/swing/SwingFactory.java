@@ -2,7 +2,9 @@ package hu.webarticum.abstract_gui.swing;
 
 import hu.webarticum.abstract_gui.framework.Environment;
 import hu.webarticum.abstract_gui.framework.Factory;
+import hu.webarticum.abstract_gui.framework.Label;
 import hu.webarticum.abstract_gui.framework.Layout;
+import hu.webarticum.abstract_gui.framework.TextField;
 import hu.webarticum.abstract_gui.framework.TextualContent;
 
 public class SwingFactory implements Factory {
@@ -54,6 +56,21 @@ public class SwingFactory implements Factory {
     @Override
     public SwingButton createButton(TextualContent labelContent) {
         return new SwingButton(environment, labelContent);
+    }
+
+    @Override
+    public Label createLabel(String label) {
+        return new SwingLabel(environment, label);
+    }
+
+    @Override
+    public Label createLabel(TextualContent labelContent) {
+        return new SwingLabel(environment, labelContent);
+    }
+
+    @Override
+    public TextField createTextField() {
+        return new SwingTextField(environment);
     }
     
 }

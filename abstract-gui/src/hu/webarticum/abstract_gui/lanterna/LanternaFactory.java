@@ -1,7 +1,9 @@
 package hu.webarticum.abstract_gui.lanterna;
 
 import hu.webarticum.abstract_gui.framework.Factory;
+import hu.webarticum.abstract_gui.framework.Label;
 import hu.webarticum.abstract_gui.framework.Layout;
+import hu.webarticum.abstract_gui.framework.TextField;
 import hu.webarticum.abstract_gui.framework.TextualContent;
 
 public class LanternaFactory implements Factory {
@@ -53,6 +55,21 @@ public class LanternaFactory implements Factory {
     @Override
     public LanternaButton createButton(TextualContent labelContent) {
         return new LanternaButton(environment, labelContent);
+    }
+
+    @Override
+    public Label createLabel(String label) {
+        return new LanternaLabel(environment, label);
+    }
+
+    @Override
+    public Label createLabel(TextualContent labelContent) {
+        return new LanternaLabel(environment, labelContent);
+    }
+
+    @Override
+    public TextField createTextField() {
+        return new LanternaTextField(environment);
     }
 
 }
