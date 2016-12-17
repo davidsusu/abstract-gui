@@ -33,8 +33,6 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
         if (!isAttachedToScreen) {
             MultiWindowTextGUI gui = getEnvironment().getGui();
             basicWindow = getNativeWindow();
-            
-            // XXX
             gui.addWindowAndWait(basicWindow);
             
             isAttachedToScreen = true;

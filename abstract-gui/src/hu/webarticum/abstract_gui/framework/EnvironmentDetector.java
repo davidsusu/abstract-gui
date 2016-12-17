@@ -43,7 +43,7 @@ public class EnvironmentDetector {
     // XXX
     static public List<Environment> getEnvironments() {
         List<Environment> environments = new ArrayList<Environment>();
-        environments.add(new SwingEnvironment());
+        //environments.add(new SwingEnvironment());
         environments.add(new LanternaEnvironment());
         return environments;
     }
