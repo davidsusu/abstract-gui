@@ -1,6 +1,6 @@
 package hu.webarticum.abstract_gui.framework.i18n;
 
-import hu.webarticum.abstract_gui.framework.HtmlContent;
+import hu.webarticum.abstract_gui.framework.HtmlUtil;
 import hu.webarticum.abstract_gui.framework.TextualContent;
 
 public class MlHtmlContent implements TextualContent {
@@ -21,7 +21,7 @@ public class MlHtmlContent implements TextualContent {
 
     @Override
     public String toString() {
-        return HtmlContent.htmlToString(repository.getText(key));
+        return HtmlUtil.htmlToString(repository.getText(key));
     }
 
     @Override

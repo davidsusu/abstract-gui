@@ -1,5 +1,6 @@
 package hu.webarticum.abstract_gui.framework.i18n;
 
+import hu.webarticum.abstract_gui.framework.HtmlUtil;
 import hu.webarticum.abstract_gui.framework.PlainContent;
 import hu.webarticum.abstract_gui.framework.TextualContent;
 
@@ -21,7 +22,7 @@ public class FormatPlainContent implements TextualContent {
 
     @Override
     public String toHtml() {
-        return PlainContent.textToHtml(toString());
+        return HtmlUtil.textToHtml(toString());
     }
 
     @Override
