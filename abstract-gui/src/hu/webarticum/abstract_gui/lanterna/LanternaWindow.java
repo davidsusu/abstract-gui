@@ -3,6 +3,9 @@ package hu.webarticum.abstract_gui.lanterna;
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 
+import hu.webarticum.abstract_gui.framework.Event;
+import hu.webarticum.abstract_gui.framework.EventListener;
+import hu.webarticum.abstract_gui.framework.GeneralListenable;
 import hu.webarticum.abstract_gui.framework.PlainContent;
 import hu.webarticum.abstract_gui.framework.TextualContent;
 import hu.webarticum.abstract_gui.framework.Window;
@@ -16,6 +19,8 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
     private BasicWindow basicWindow = null;
     
     private LanternaPanel rootPanel;
+    
+    protected GeneralListenable generalListenable = new GeneralListenable();
     
     LanternaWindow(LanternaEnvironment environment, String title) {
         this(environment, new PlainContent(title));
@@ -52,6 +57,21 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
         rootPanel.refresh();
     }
     
+    @Override
+    public void on(Object eventType, EventListener listener) {
+        generalListenable.on(eventType, listener);
+    }
+
+    @Override
+    public void off(Object eventType, EventListener listener) {
+        generalListenable.off(eventType, listener);
+    }
+
+    @Override
+    public void runListeners(Object eventType, Event event) {
+        generalListenable.runListeners(eventType, event);
+    }
+
     public BasicWindow getNativeWindow() {
         if (basicWindow == null) {
             basicWindow = new BasicWindow(titleContent.toString());

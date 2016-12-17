@@ -2,6 +2,8 @@ package hu.webarticum.abstract_gui;
 
 import hu.webarticum.abstract_gui.framework.Environment;
 import hu.webarticum.abstract_gui.framework.EnvironmentDetector;
+import hu.webarticum.abstract_gui.framework.Event;
+import hu.webarticum.abstract_gui.framework.EventListener;
 import hu.webarticum.abstract_gui.framework.Factory;
 import hu.webarticum.abstract_gui.framework.HtmlContent;
 import hu.webarticum.abstract_gui.framework.Label;
@@ -10,7 +12,6 @@ import hu.webarticum.abstract_gui.framework.TextField;
 
 import java.util.Locale;
 
-import hu.webarticum.abstract_gui.framework.ActionListener;
 import hu.webarticum.abstract_gui.framework.BorderLayout;
 import hu.webarticum.abstract_gui.framework.Button;
 import hu.webarticum.abstract_gui.framework.Window;
@@ -37,10 +38,10 @@ public class Main {
         final Button anOtherButton = factory.createButton(new FormatHtmlContent(textRepository.createMlHtmlContent("patterntext"), "fix"));
         
         final Button langSwitcherButton = factory.createButton(textRepository.createMlHtmlContent("switchlang"));
-        langSwitcherButton.addActionListener(new ActionListener() {
+        langSwitcherButton.on("click", new EventListener() {
             
             @Override
-            public void actionPerformed() {
+            public void occured(Event event) {
                 textRepository.setLocale(new Locale(textRepository.getLocale().toString().equalsIgnoreCase("hu_HU") ? "en_US" : "hu_HU"));
                 window.refresh();
             }

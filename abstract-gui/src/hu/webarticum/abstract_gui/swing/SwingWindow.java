@@ -2,6 +2,9 @@ package hu.webarticum.abstract_gui.swing;
 
 import javax.swing.JFrame;
 
+import hu.webarticum.abstract_gui.framework.Event;
+import hu.webarticum.abstract_gui.framework.EventListener;
+import hu.webarticum.abstract_gui.framework.GeneralListenable;
 import hu.webarticum.abstract_gui.framework.PlainContent;
 import hu.webarticum.abstract_gui.framework.TextualContent;
 import hu.webarticum.abstract_gui.framework.Window;
@@ -14,6 +17,8 @@ public class SwingWindow extends AbstractSwingEnvironmentMember implements Windo
     
     private SwingPanel rootPanel;
 
+    protected GeneralListenable generalListenable = new GeneralListenable();
+    
     SwingWindow(SwingEnvironment environment, String title) {
         this(environment, new PlainContent(title));
     }
@@ -43,7 +48,22 @@ public class SwingWindow extends AbstractSwingEnvironmentMember implements Windo
         frame.setTitle(titleContent.toString());
         rootPanel.refresh();
     }
-    
+
+    @Override
+    public void on(Object eventType, EventListener listener) {
+        generalListenable.on(eventType, listener);
+    }
+
+    @Override
+    public void off(Object eventType, EventListener listener) {
+        generalListenable.off(eventType, listener);
+    }
+
+    @Override
+    public void runListeners(Object eventType, Event event) {
+        generalListenable.runListeners(eventType, event);
+    }
+
     public JFrame getNativeWindow() {
         return frame;
     }
