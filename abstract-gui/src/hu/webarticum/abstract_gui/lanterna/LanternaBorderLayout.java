@@ -1,5 +1,8 @@
 package hu.webarticum.abstract_gui.lanterna;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.googlecode.lanterna.gui2.LayoutManager;
 
 import hu.webarticum.abstract_gui.framework.BorderLayout;
@@ -10,13 +13,16 @@ public class LanternaBorderLayout extends AbstractLanternaLayout implements Bord
     
     private final com.googlecode.lanterna.gui2.BorderLayout borderLayout;
     
-    private com.googlecode.lanterna.gui2.BorderLayout.Location[] nativeConstants = {
-        com.googlecode.lanterna.gui2.BorderLayout.Location.TOP,
-        com.googlecode.lanterna.gui2.BorderLayout.Location.LEFT,
-        com.googlecode.lanterna.gui2.BorderLayout.Location.CENTER,
-        com.googlecode.lanterna.gui2.BorderLayout.Location.RIGHT,
-        com.googlecode.lanterna.gui2.BorderLayout.Location.BOTTOM,
-    };
+    private Map<Object, com.googlecode.lanterna.gui2.BorderLayout.Location> nativeConstantMap =
+        new HashMap<Object, com.googlecode.lanterna.gui2.BorderLayout.Location>()
+    ;
+    {
+        nativeConstantMap.put(Location.TOP, com.googlecode.lanterna.gui2.BorderLayout.Location.TOP);
+        nativeConstantMap.put(Location.LEFT, com.googlecode.lanterna.gui2.BorderLayout.Location.LEFT);
+        nativeConstantMap.put(Location.CENTER, com.googlecode.lanterna.gui2.BorderLayout.Location.CENTER);
+        nativeConstantMap.put(Location.RIGHT, com.googlecode.lanterna.gui2.BorderLayout.Location.RIGHT);
+        nativeConstantMap.put(Location.BOTTOM, com.googlecode.lanterna.gui2.BorderLayout.Location.BOTTOM);
+    }
     
     LanternaBorderLayout(LanternaEnvironment environment) {
         super(environment);
@@ -26,11 +32,11 @@ public class LanternaBorderLayout extends AbstractLanternaLayout implements Bord
     
     @Override
     public void add(Panel panel, Component component) {
-        add(panel, component, AREA_CENTER);
+        add(panel, component, Location.CENTER);
     }
 
     @Override
-    public void add(Panel panel, Component component, int place) {
+    public void add(Panel panel, Component component, Object constraint) {
         if (!(panel instanceof LanternaPanel)) {
             throw new IllegalArgumentException("Incompatible panel type: " + panel.getClass().getSimpleName());
         }
@@ -39,7 +45,7 @@ public class LanternaBorderLayout extends AbstractLanternaLayout implements Bord
         }
         com.googlecode.lanterna.gui2.Panel nativePanel = ((LanternaPanel)panel).getNativeComponent();
         com.googlecode.lanterna.gui2.Component nativeComponent = ((AbstractLanternaComponent)component).getNativeComponent();
-        com.googlecode.lanterna.gui2.BorderLayout.Location nativeLayoutArea = nativeConstants[place];
+        com.googlecode.lanterna.gui2.BorderLayout.Location nativeLayoutArea = nativeConstantMap.get(constraint);
         nativePanel.addComponent(nativeComponent, nativeLayoutArea);
     }
 

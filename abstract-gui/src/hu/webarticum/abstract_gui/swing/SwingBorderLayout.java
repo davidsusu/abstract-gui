@@ -1,5 +1,8 @@
 package hu.webarticum.abstract_gui.swing;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.JPanel;
 
 import hu.webarticum.abstract_gui.framework.BorderLayout;
@@ -9,14 +12,15 @@ import hu.webarticum.abstract_gui.framework.Panel;
 public class SwingBorderLayout extends AbstractSwingLayout implements BorderLayout {
     
     private final java.awt.BorderLayout borderLayout;
-    
-    private String[] nativeConstants = {
-        java.awt.BorderLayout.PAGE_START,
-        java.awt.BorderLayout.LINE_START,
-        java.awt.BorderLayout.CENTER,
-        java.awt.BorderLayout.LINE_END,
-        java.awt.BorderLayout.PAGE_END,
-    };
+
+    private Map<Object, String> nativeConstantMap = new HashMap<Object, String>();
+    {
+        nativeConstantMap.put(Location.TOP, java.awt.BorderLayout.PAGE_START);
+        nativeConstantMap.put(Location.LEFT, java.awt.BorderLayout.LINE_START);
+        nativeConstantMap.put(Location.CENTER, java.awt.BorderLayout.CENTER);
+        nativeConstantMap.put(Location.RIGHT, java.awt.BorderLayout.LINE_END);
+        nativeConstantMap.put(Location.BOTTOM, java.awt.BorderLayout.PAGE_END);
+    }
     
     SwingBorderLayout(SwingEnvironment environment) {
         super(environment);
@@ -30,11 +34,11 @@ public class SwingBorderLayout extends AbstractSwingLayout implements BorderLayo
 
     @Override
     public void add(Panel panel, Component component) {
-        add(panel, component, AREA_CENTER);
+        add(panel, component, Location.CENTER);
     }
 
     @Override
-    public void add(Panel panel, Component component, int place) {
+    public void add(Panel panel, Component component, Object constraint) {
         if (!(panel instanceof SwingPanel)) {
             throw new IllegalArgumentException("Incompatible panel type: " + panel.getClass().getSimpleName());
         }
@@ -43,7 +47,7 @@ public class SwingBorderLayout extends AbstractSwingLayout implements BorderLayo
         }
         JPanel nativePanel = ((SwingPanel)panel).getNativeComponent();
         java.awt.Component nativeComponent = ((AbstractSwingComponent)component).getNativeComponent();
-        String nativeLayoutArea = nativeConstants[place];
+        String nativeLayoutArea = nativeConstantMap.get(constraint);
         nativePanel.add(nativeComponent, nativeLayoutArea);
     }
     

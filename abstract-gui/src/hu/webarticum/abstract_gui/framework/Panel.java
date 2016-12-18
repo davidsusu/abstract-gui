@@ -8,7 +8,7 @@ public interface Panel extends Component {
 
     public void add(Component component);
     
-    public void add(Component component, int place);
+    public void add(Component component, Object constraint);
     
     public List<? extends Component> getChildren();
     

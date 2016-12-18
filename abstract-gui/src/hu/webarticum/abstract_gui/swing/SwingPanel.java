@@ -43,11 +43,11 @@ public class SwingPanel extends AbstractSwingComponent implements Panel {
     }
 
     @Override
-    public void add(Component component, int place) {
+    public void add(Component component, Object constraint) {
         if (!(component instanceof AbstractSwingComponent)) {
             throw new IllegalArgumentException("Incompatible component type: " + component.getClass().getSimpleName());
         }
-        layout.add(this, component, place);
+        layout.add(this, component, constraint);
         children.add((AbstractSwingComponent)component);
     }
 

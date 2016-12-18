@@ -47,11 +47,11 @@ public class Main {
             
         });
 
-        panel.add(topLabel, BorderLayout.AREA_TOP);
-        panel.add(aButton, BorderLayout.AREA_LEFT);
-        panel.add(inputField, BorderLayout.AREA_CENTER);
-        panel.add(anOtherButton, BorderLayout.AREA_RIGHT);
-        panel.add(langSwitcherButton, BorderLayout.AREA_BOTTOM);
+        panel.add(topLabel, BorderLayout.Location.TOP);
+        panel.add(aButton, BorderLayout.Location.LEFT);
+        panel.add(inputField, BorderLayout.Location.CENTER);
+        panel.add(anOtherButton, BorderLayout.Location.RIGHT);
+        panel.add(langSwitcherButton, BorderLayout.Location.BOTTOM);
         
         window.open();
     }
