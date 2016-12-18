@@ -10,7 +10,9 @@ public class Event {
     private final Object nativeEvent;
     
     private final Map<String, Object> propertyMap;
-
+    
+    // TODO event type
+    
     public Event() {
         this(null, null, null);
     }
