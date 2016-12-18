@@ -7,6 +7,8 @@ public interface Factory extends EnvironmentMember {
 
     public Window createWindow(TextualContent titleContent);
 
+    public AbsoluteLayout createAbsoluteLayout();
+    
     public BorderLayout createBorderLayout();
     
     public Panel createPanel();

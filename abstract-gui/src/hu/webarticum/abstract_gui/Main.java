@@ -7,6 +7,7 @@ import hu.webarticum.abstract_gui.framework.EventListener;
 import hu.webarticum.abstract_gui.framework.Factory;
 import hu.webarticum.abstract_gui.framework.HtmlContent;
 import hu.webarticum.abstract_gui.framework.Label;
+import hu.webarticum.abstract_gui.framework.Metrics;
 import hu.webarticum.abstract_gui.framework.Panel;
 import hu.webarticum.abstract_gui.framework.TextField;
 
@@ -46,10 +47,13 @@ public class Main {
             }
             
         });
-
+        
+        final Panel centerPanel = factory.createPanel(factory.createAbsoluteLayout());
+        centerPanel.add(inputField, new Metrics(25, 25));
+        
         panel.add(topLabel, BorderLayout.Location.TOP);
         panel.add(aButton, BorderLayout.Location.LEFT);
-        panel.add(inputField, BorderLayout.Location.CENTER);
+        panel.add(centerPanel, BorderLayout.Location.CENTER);
         panel.add(anOtherButton, BorderLayout.Location.RIGHT);
         panel.add(langSwitcherButton, BorderLayout.Location.BOTTOM);
         

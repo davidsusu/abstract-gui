@@ -30,6 +30,11 @@ public class LanternaFactory implements Factory {
     }
 
     @Override
+    public LanternaAbsoluteLayout createAbsoluteLayout() {
+        return new LanternaAbsoluteLayout(environment);
+    }
+
+    @Override
     public LanternaBorderLayout createBorderLayout() {
         return new LanternaBorderLayout(environment);
     }

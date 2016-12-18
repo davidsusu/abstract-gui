@@ -54,6 +54,21 @@ public class LanternaEnvironment implements Environment {
         return true;
     }
     
+    @Override
+    public int getPriority() {
+        return PRIORITY_NORMAL;
+    }
+
+    @Override
+    public void invokeLater(Runnable runnable) {
+        getGui().getGUIThread().invokeLater(runnable);
+    }
+
+    @Override
+    public void invokeAndWait(Runnable runnable) throws InterruptedException {
+        getGui().getGUIThread().invokeAndWait(runnable);
+    }
+
     MultiWindowTextGUI getGui() {
         if (gui == null) {
             Screen screen;
@@ -71,20 +86,15 @@ public class LanternaEnvironment implements Environment {
         }
         return gui;
     }
-
-    @Override
-    public int getPriority() {
-        return PRIORITY_NORMAL;
+    
+    int getCharacterHeight() {
+        // XXX
+        return 20;
     }
-
-    @Override
-    public void invokeLater(Runnable runnable) {
-        getGui().getGUIThread().invokeLater(runnable);
-    }
-
-    @Override
-    public void invokeAndWait(Runnable runnable) throws InterruptedException {
-        getGui().getGUIThread().invokeAndWait(runnable);
+    
+    int getCharacterWidth() {
+        // XXX
+        return 12;
     }
     
 }

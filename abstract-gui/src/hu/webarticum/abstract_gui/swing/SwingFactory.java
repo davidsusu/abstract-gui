@@ -31,6 +31,11 @@ public class SwingFactory implements Factory {
     }
 
     @Override
+    public SwingAbsoluteLayout createAbsoluteLayout() {
+        return new SwingAbsoluteLayout(environment);
+    }
+
+    @Override
     public SwingBorderLayout createBorderLayout() {
         return new SwingBorderLayout(environment);
     }

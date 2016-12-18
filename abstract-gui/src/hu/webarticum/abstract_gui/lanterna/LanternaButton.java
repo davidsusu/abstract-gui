@@ -25,7 +25,7 @@ public class LanternaButton extends AbstractLanternaComponent implements Button 
             
             @Override
             public void run() {
-                generalListenable.runListeners("click", new Event(button, null));
+                generalListenable.runListeners(Event.Type.ACTION, new Event(button, null));
             }
             
         });
