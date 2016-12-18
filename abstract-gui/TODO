@@ -7,4 +7,4 @@ layouts
 advanced components, lists, menus etc., form builder
 dialog util (with shortcut for alert, prompt, select etc.)
 styles, metrics (px vs. cell vs. ?), basic css support (layouts?)
-value restrition (integer, email, regex etc.)
+value restriction (integer, email, regex etc.)
