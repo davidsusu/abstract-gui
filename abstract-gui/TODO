@@ -1,22 +1,10 @@
-metrics (px vs. cell vs. ?)
-event handling
-layouts (wrapper vs. immutable?)
+layouts
   AbsoluteLayout
   BorderLayout
   LinearLayout
   FlowLayout (?)
   GridLayout
-i18n
-  ContentSource
-    .{add|remove}ChangeListener(ChangeListener)
-      .onChanged(...)
-        or:
-          - getSerial()
-          - call from outer
-          - ???
-    .getContent()
-advanced components (lists, menus etc.)
-complex components (complete forms etc.)
-basic css support (layouts?)
+advanced components, lists, menus etc., form builder
+dialog util (with shortcut for alert, prompt, select etc.)
+styles, metrics (px vs. cell vs. ?), basic css support (layouts?)
 value restrition (integer, email, regex etc.)
-dialog builder (with shortcut for alert, prompt, select etc.)
