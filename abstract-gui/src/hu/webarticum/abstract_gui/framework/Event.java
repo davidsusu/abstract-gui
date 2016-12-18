@@ -4,34 +4,47 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Event {
-
+    
+    public enum Type {
+        ACTION
+    }
+    
+    private final Object type;
+    
     private final Object target;
     
     private final Object nativeEvent;
     
     private final Map<String, Object> propertyMap;
     
-    // TODO event type
-    
     public Event() {
-        this(null, null, null);
+        this(null, null, null, null);
+    }
+
+    public Event(Object type) {
+        this(type, null, null, null);
     }
     
-    public Event(Object target) {
-        this(target, null, null);
+    public Event(Object type, Object target) {
+        this(type, target, null, null);
     }
     
-    public Event(Object target, Object nativeEvent) {
-        this(target, nativeEvent, null);
+    public Event(Object type, Object target, Object nativeEvent) {
+        this(type, target, nativeEvent, null);
     }
     
-    public Event(Object target, Object nativeEvent, Map<String, Object> propertyMap) {
+    public Event(Object type, Object target, Object nativeEvent, Map<String, Object> propertyMap) {
+        this.type = type;
         this.target = target;
         this.nativeEvent = nativeEvent;
         this.propertyMap = new HashMap<String, Object>();
         if (propertyMap != null) {
             this.propertyMap.putAll(propertyMap);
         }
+    }
+
+    public Object getType() {
+        return type;
     }
 
     public Object getTarget() {

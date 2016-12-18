@@ -37,7 +37,7 @@ public class Main {
         final Button anOtherButton = factory.createButton(textRepository.createFormatHtmlContent(textRepository.createMlHtmlContent("patterntext"), "fix", 12.34d));
         
         final Button langSwitcherButton = factory.createButton(textRepository.createMlHtmlContent("switchlang"));
-        langSwitcherButton.on("click", new EventListener() {
+        langSwitcherButton.on(Event.Type.ACTION, new EventListener() {
             
             @Override
             public void occured(Event event) {
