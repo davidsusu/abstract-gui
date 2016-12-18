@@ -28,8 +28,7 @@ public class SwingButton extends AbstractSwingComponent implements Button {
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                // XXX
-                generalListenable.runListeners("click", new Event());
+                generalListenable.runListeners("click", new Event(button));
             }
             
         });
