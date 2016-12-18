@@ -5,10 +5,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import hu.webarticum.abstract_gui.lanterna.LanternaEnvironment;
-import hu.webarticum.abstract_gui.swing.SwingEnvironment;
-
 public class EnvironmentDetector {
+    
+    static private List<String> environmentClasses = new ArrayList<String>();
+    static {
+        registerEnvironmentClass("hu.webarticum.abstract_gui.swing.SwingEnvironment");
+        registerEnvironmentClass("hu.webarticum.abstract_gui.android.AndroidEnvironment");
+        registerEnvironmentClass("hu.webarticum.abstract_gui.lanterna.LanternaEnvironment");
+    }
     
     static private Environment defaultEnvironment = null;
     
@@ -39,12 +43,25 @@ public class EnvironmentDetector {
         });
         return availableEnvironments;
     }
+
+    static public void registerEnvironmentClass(Class<? extends Environment> environmentClass) {
+        registerEnvironmentClass(environmentClass.getName());
+    }
+
+    static public void registerEnvironmentClass(String environmentClassName) {
+        environmentClasses.add(environmentClassName);
+    }
     
-    // XXX
     static public List<Environment> getEnvironments() {
         List<Environment> environments = new ArrayList<Environment>();
-        environments.add(new SwingEnvironment());
-        environments.add(new LanternaEnvironment());
+        for (String className: environmentClasses) {
+            try {
+                environments.add((Environment)Class.forName(className).newInstance());
+            } catch (InstantiationException e) {
+            } catch (IllegalAccessException e) {
+            } catch (ClassNotFoundException e) {
+            }
+        }
         return environments;
     }
     
