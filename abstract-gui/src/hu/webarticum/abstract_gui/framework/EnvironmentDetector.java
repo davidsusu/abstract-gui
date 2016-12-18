@@ -7,7 +7,7 @@ import java.util.List;
 
 public class EnvironmentDetector {
     
-    static private List<String> environmentClasses = new ArrayList<String>();
+    static private List<String> environmentClassNames = new ArrayList<String>();
     static {
         registerEnvironmentClass("hu.webarticum.abstract_gui.swing.SwingEnvironment");
         registerEnvironmentClass("hu.webarticum.abstract_gui.android.AndroidEnvironment");
@@ -49,12 +49,20 @@ public class EnvironmentDetector {
     }
 
     static public void registerEnvironmentClass(String environmentClassName) {
-        environmentClasses.add(environmentClassName);
+        environmentClassNames.add(environmentClassName);
+    }
+    
+    static public void unregisterEnvirenmentClass(Class<? extends Environment> environmentClass) {
+        unregisterEnvirenmentClass(environmentClass);
+    }
+
+    static public void unregisterEnvirenmentClass(String environmentClassName) {
+        environmentClassNames.remove(environmentClassName);
     }
     
     static public List<Environment> getEnvironments() {
         List<Environment> environments = new ArrayList<Environment>();
-        for (String className: environmentClasses) {
+        for (String className: environmentClassNames) {
             try {
                 environments.add((Environment)Class.forName(className).newInstance());
             } catch (InstantiationException e) {
