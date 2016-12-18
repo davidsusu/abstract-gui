@@ -16,7 +16,6 @@ import hu.webarticum.abstract_gui.framework.BorderLayout;
 import hu.webarticum.abstract_gui.framework.Button;
 import hu.webarticum.abstract_gui.framework.Window;
 import hu.webarticum.abstract_gui.framework.i18n.AbstractTextRepository;
-import hu.webarticum.abstract_gui.framework.i18n.FormatHtmlContent;
 
 public class Main {
     
@@ -35,14 +34,14 @@ public class Main {
         final TextField inputField = factory.createTextField();
         inputField.setValue("initial");
         
-        final Button anOtherButton = factory.createButton(new FormatHtmlContent(textRepository.createMlHtmlContent("patterntext"), "fix"));
+        final Button anOtherButton = factory.createButton(textRepository.createFormatHtmlContent(textRepository.createMlHtmlContent("patterntext"), "fix", 12.34d));
         
         final Button langSwitcherButton = factory.createButton(textRepository.createMlHtmlContent("switchlang"));
         langSwitcherButton.on("click", new EventListener() {
             
             @Override
             public void occured(Event event) {
-                textRepository.setLocale(new Locale(textRepository.getLocale().toString().equalsIgnoreCase("hu_HU") ? "en_US" : "hu_HU"));
+                textRepository.setLocale(new Locale(textRepository.getLocale().toString().equalsIgnoreCase("hu") ? "en_US" : "hu"));
                 window.refresh();
             }
             
@@ -58,18 +57,18 @@ public class Main {
     }
     
     private static class TestTextRepository extends AbstractTextRepository {
-        
-        private Locale locale = new Locale("hu_HU");
+
+        private Locale locale = new Locale("hu");
         
         @Override
         public String getText(Object key) {
-            if (locale.toString().equalsIgnoreCase("hu_HU")) {
+            if (locale.toString().equalsIgnoreCase("hu")) {
                 if (key.equals("windowtitle")) {
                     return "Tesztablak";
                 } else if (key.equals("toplabel")) {
                     return "Felső szöveg";
                 } else if (key.equals("patterntext")) {
-                    return "HU (<u>%s</u>)";
+                    return "HU (<u>%s</u>) (%.2f)";
                 } else if (key.equals("switchlang")) {
                     return "<i>Nyelv váltása</i>";
                 } else {
@@ -81,7 +80,7 @@ public class Main {
                 } else if (key.equals("toplabel")) {
                     return "Top label";
                 } else if (key.equals("patterntext")) {
-                    return "EN (<u>%s</u>)";
+                    return "EN (<u>%s</u>) (%.2f)";
                 } else if (key.equals("switchlang")) {
                     return "<i>Switch language</i>";
                 } else {

@@ -5,16 +5,27 @@ import hu.webarticum.abstract_gui.framework.HtmlUtil;
 import hu.webarticum.abstract_gui.framework.TextualContent;
 
 public class FormatHtmlContent implements TextualContent {
+
+    final private AbstractTextRepository repository;
     
     final private TextualContent formatContent;
     
     final private Object[] valueContents;
 
     public FormatHtmlContent(String formatString, Object... valueContents) {
-        this(new HtmlContent(formatString), valueContents);
+        this(null, formatString, valueContents);
     }
     
     public FormatHtmlContent(TextualContent formatContent, Object... valueContents) {
+        this(null, formatContent, valueContents);
+    }
+
+    public FormatHtmlContent(AbstractTextRepository repository, String formatString, Object... valueContents) {
+        this(new HtmlContent(formatString), valueContents);
+    }
+    
+    public FormatHtmlContent(AbstractTextRepository repository, TextualContent formatContent, Object... valueContents) {
+        this.repository = repository;
         this.formatContent = formatContent;
         this.valueContents = valueContents;
     }
@@ -29,7 +40,11 @@ public class FormatHtmlContent implements TextualContent {
             }
             manipulatedValueContents[i] = item;
         }
-        return String.format(formatContent.toHtml(), manipulatedValueContents);
+        if (repository == null) {
+            return String.format(formatContent.toHtml(), manipulatedValueContents);
+        } else {
+            return String.format(repository.getLocale(), formatContent.toHtml(), manipulatedValueContents);
+        }
     }
 
     @Override
