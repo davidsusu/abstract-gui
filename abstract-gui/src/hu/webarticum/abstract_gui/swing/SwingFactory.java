@@ -41,6 +41,11 @@ public class SwingFactory implements Factory {
     }
 
     @Override
+    public SwingGridLayout createGridLayout(int columns) {
+        return new SwingGridLayout(environment, columns);
+    }
+
+    @Override
     public SwingPanel createPanel() {
         return createPanel(createBorderLayout());
     }

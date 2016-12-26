@@ -24,12 +24,7 @@ public class LanternaAbsoluteLayout extends AbstractLanternaLayout implements Ab
 
     @Override
     public void add(Panel panel, Component component, Object constraint) {
-        if (!(panel instanceof LanternaPanel)) {
-            throw new IllegalArgumentException("Incompatible panel type: " + panel.getClass().getSimpleName());
-        }
-        if (!(component instanceof AbstractLanternaComponent)) {
-            throw new IllegalArgumentException("Incompatible component type: " + component.getClass().getSimpleName());
-        }
+        checkComponents(panel, component);
         LanternaEnvironment environment = getEnvironment();
         int column = 0;
         int row = 0;

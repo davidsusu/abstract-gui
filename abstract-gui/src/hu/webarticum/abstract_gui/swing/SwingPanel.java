@@ -33,6 +33,7 @@ public class SwingPanel extends AbstractSwingComponent implements Panel {
         this.layout = swingLayout;
     }
 
+    // FIXME / TODO order by constraint...
     @Override
     public void add(Component component) {
         if (!(component instanceof AbstractSwingComponent)) {

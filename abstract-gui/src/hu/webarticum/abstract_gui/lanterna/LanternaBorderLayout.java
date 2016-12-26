@@ -37,12 +37,7 @@ public class LanternaBorderLayout extends AbstractLanternaLayout implements Bord
 
     @Override
     public void add(Panel panel, Component component, Object constraint) {
-        if (!(panel instanceof LanternaPanel)) {
-            throw new IllegalArgumentException("Incompatible panel type: " + panel.getClass().getSimpleName());
-        }
-        if (!(component instanceof AbstractLanternaComponent)) {
-            throw new IllegalArgumentException("Incompatible component type: " + component.getClass().getSimpleName());
-        }
+        checkComponents(panel, component);
         com.googlecode.lanterna.gui2.Panel nativePanel = ((LanternaPanel)panel).getNativeComponent();
         com.googlecode.lanterna.gui2.Component nativeComponent = ((AbstractLanternaComponent)component).getNativeComponent();
         com.googlecode.lanterna.gui2.BorderLayout.Location nativeLayoutArea = nativeConstantMap.get(constraint);

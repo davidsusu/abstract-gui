@@ -40,6 +40,11 @@ public class LanternaFactory implements Factory {
     }
 
     @Override
+    public LanternaGridLayout createGridLayout(int columns) {
+        return new LanternaGridLayout(environment, columns);
+    }
+
+    @Override
     public LanternaPanel createPanel() {
         return createPanel(createBorderLayout());
     }

@@ -11,6 +11,8 @@ public interface Factory extends EnvironmentMember {
     
     public BorderLayout createBorderLayout();
     
+    public GridLayout createGridLayout(int columns);
+    
     public Panel createPanel();
 
     public Panel createPanel(Layout layout);

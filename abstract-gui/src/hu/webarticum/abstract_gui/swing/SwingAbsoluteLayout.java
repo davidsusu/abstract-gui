@@ -24,12 +24,7 @@ public class SwingAbsoluteLayout extends AbstractSwingLayout implements Absolute
 
     @Override
     public void add(Panel panel, Component component, Object constraint) {
-        if (!(panel instanceof SwingPanel)) {
-            throw new IllegalArgumentException("Incompatible panel type: " + panel.getClass().getSimpleName());
-        }
-        if (!(component instanceof AbstractSwingComponent)) {
-            throw new IllegalArgumentException("Incompatible component type: " + component.getClass().getSimpleName());
-        }
+        checkComponents(panel, component);
         int left = 0;
         int top = 0;
         if (constraint instanceof Metrics) {
