@@ -1,9 +1,16 @@
 package hu.webarticum.abstract_gui.framework;
 
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 
 /**
  * A clearable view of a character array
@@ -90,6 +97,30 @@ public class SecureString implements CharSequence {
         }
     }
 
+    public byte[] encrypt(Cipher initedCipher, Charset charset) throws BadPaddingException, IllegalBlockSizeException {
+        CharBuffer charBuffer = CharBuffer.wrap(characters);
+        ByteBuffer byteBuffer = charset.encode(charBuffer);
+        byte[] sourceBytes = Arrays.copyOfRange(
+            byteBuffer.array(),
+            byteBuffer.position(),
+            byteBuffer.limit()
+        );
+        clearByteArray(byteBuffer.array());
+        
+        byte[] encryptedBytes;
+        try {
+            encryptedBytes = initedCipher.doFinal(sourceBytes);
+        } catch (IllegalBlockSizeException e) {
+            throw e;
+        } catch (BadPaddingException e) {
+            throw e;
+        } finally {
+            clearByteArray(sourceBytes);
+        }
+        
+        return encryptedBytes;
+    }
+    
     @Override
     public String toString() {
         return "@secure";
@@ -101,15 +132,20 @@ public class SecureString implements CharSequence {
         super.finalize();
     }
 
-    public static void clearCharArray(char[] characters) {
+    static public void clearCharArray(char[] characters) {
         clearCharArray(characters, 0, characters.length);
     }
     
-    public static void clearCharArray(char[] characters, int from, int to) {
+    static public void clearCharArray(char[] characters, int from, int to) {
         Random random = new SecureRandom();
         for (int i = from; i < to; i++) {
             characters[i] = (char)(random.nextInt(254) + 1);
         }
+    }
+    
+    static public void clearByteArray(byte[] bytes) {
+        Random random = new SecureRandom();
+        random.nextBytes(bytes);
     }
     
 }
