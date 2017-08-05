@@ -1,7 +1,9 @@
 package hu.webarticum.abstract_gui.framework;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * A clearable view of a character array
@@ -16,6 +18,8 @@ public class SecureString implements CharSequence {
     private final int start;
     
     private final int length;
+    
+    private volatile boolean cleared = false;
 
     public SecureString(Iterator<Character> iterator) {
         this(iterateCharacters(iterator));
@@ -55,8 +59,8 @@ public class SecureString implements CharSequence {
         for (int i = 0; i < bufferSize; i++) {
             result[characters.length + i] = buffer[i];
         }
-        Arrays.fill(characters, ' ');
-        Arrays.fill(buffer, 0, bufferSize, ' ');
+        clearCharArray(characters);
+        clearCharArray(buffer, 0, bufferSize);
         return result;
     }
     
@@ -75,19 +79,37 @@ public class SecureString implements CharSequence {
         return new SecureString(characters, this.start + start, end - start);
     }
     
+    public boolean isCleared() {
+        return cleared;
+    }
+    
+    synchronized public void clear() {
+        if (!cleared) {
+            clearCharArray(characters, start, start + length);
+            cleared = true;
+        }
+    }
+
     @Override
     public String toString() {
         return "@secure";
-    }
-    
-    public void clear() {
-        Arrays.fill(characters, start, start + length, ' ');
     }
     
     @Override
     protected void finalize() throws Throwable {
         clear();
         super.finalize();
+    }
+
+    public static void clearCharArray(char[] characters) {
+        clearCharArray(characters, 0, characters.length);
+    }
+    
+    public static void clearCharArray(char[] characters, int from, int to) {
+        Random random = new SecureRandom();
+        for (int i = from; i < to; i++) {
+            characters[i] = (char)(random.nextInt(254) + 1);
+        }
     }
     
 }
