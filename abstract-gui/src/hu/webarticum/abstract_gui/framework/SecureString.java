@@ -31,7 +31,7 @@ public class SecureString implements CharSequence {
     public SecureString(Iterator<Character> iterator) {
         this(iterateCharacters(iterator));
     }
-
+    
     public SecureString(char[] characters) {
         this(characters, 0, characters.length);
     }
@@ -97,7 +97,7 @@ public class SecureString implements CharSequence {
         }
     }
 
-    public byte[] encrypt(Cipher initedCipher, Charset charset) throws BadPaddingException, IllegalBlockSizeException {
+    public byte[] encrypt(Cipher initedEncryptionCipher, Charset charset) throws BadPaddingException, IllegalBlockSizeException {
         CharBuffer charBuffer = CharBuffer.wrap(characters);
         ByteBuffer byteBuffer = charset.encode(charBuffer);
         byte[] sourceBytes = Arrays.copyOfRange(
@@ -109,7 +109,7 @@ public class SecureString implements CharSequence {
         
         byte[] encryptedBytes;
         try {
-            encryptedBytes = initedCipher.doFinal(sourceBytes);
+            encryptedBytes = initedEncryptionCipher.doFinal(sourceBytes);
         } catch (IllegalBlockSizeException e) {
             throw e;
         } catch (BadPaddingException e) {
@@ -130,6 +130,21 @@ public class SecureString implements CharSequence {
     protected void finalize() throws Throwable {
         clear();
         super.finalize();
+    }
+    
+    static public SecureString decrypt(Cipher initedDecryptionCipher, Charset charset, byte[] bytes) throws IllegalBlockSizeException, BadPaddingException {
+        byte[] decodedBytes = initedDecryptionCipher.doFinal(bytes);
+        
+        ByteBuffer byteBuffer = ByteBuffer.wrap(decodedBytes);
+        CharBuffer charBuffer = charset.decode(byteBuffer);
+        clearByteArray(decodedBytes);
+        char[] characters = Arrays.copyOfRange(
+            charBuffer.array(),
+            charBuffer.position(),
+            charBuffer.limit()
+        );
+        clearCharArray(charBuffer.array());
+        return new SecureString(characters);
     }
 
     static public void clearCharArray(char[] characters) {
