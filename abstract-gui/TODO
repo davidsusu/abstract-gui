@@ -5,6 +5,6 @@ layouts
   FlowLayout (?)
   GridLayout
 advanced components, lists, menus etc., form builder
-dialog util (with shortcut for alert, prompt, select etc.)
+dialog util (with shortcut for alert, prompt, select etc.) - Dialogs.alert(...)
 styles, basic css support (layouts?)
 value restriction (integer, email, regex etc.)
