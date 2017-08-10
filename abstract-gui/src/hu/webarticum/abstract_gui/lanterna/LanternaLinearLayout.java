@@ -3,17 +3,22 @@ package hu.webarticum.abstract_gui.lanterna;
 import com.googlecode.lanterna.gui2.LayoutManager;
 
 import hu.webarticum.abstract_gui.framework.Component;
-import hu.webarticum.abstract_gui.framework.GridLayout;
+import hu.webarticum.abstract_gui.framework.LinearLayout;
 import hu.webarticum.abstract_gui.framework.Panel;
 
-public class LanternaGridLayout extends AbstractLanternaLayout implements GridLayout {
+public class LanternaLinearLayout extends AbstractLanternaLayout implements LinearLayout {
     
-    private final com.googlecode.lanterna.gui2.GridLayout gridLayout;
+    private final com.googlecode.lanterna.gui2.LinearLayout linearLayout;
     
-    LanternaGridLayout(LanternaEnvironment environment, int columns) {
+    LanternaLinearLayout(LanternaEnvironment environment, LinearLayout.Direction direction) {
         super(environment);
         
-        this.gridLayout = new com.googlecode.lanterna.gui2.GridLayout(columns);
+        com.googlecode.lanterna.gui2.Direction lanternaDirection =
+            direction == LinearLayout.Direction.HORIZONTAL ?
+            com.googlecode.lanterna.gui2.Direction.HORIZONTAL :
+            com.googlecode.lanterna.gui2.Direction.VERTICAL
+        ;
+        this.linearLayout = new com.googlecode.lanterna.gui2.LinearLayout(lanternaDirection);
     }
 
     @Override
@@ -33,7 +38,7 @@ public class LanternaGridLayout extends AbstractLanternaLayout implements GridLa
 
     @Override
     public LayoutManager getNativeLayout() {
-        return gridLayout;
+        return linearLayout;
     }
 
 }

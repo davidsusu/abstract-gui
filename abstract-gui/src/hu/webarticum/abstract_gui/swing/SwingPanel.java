@@ -29,7 +29,7 @@ public class SwingPanel extends AbstractSwingComponent implements Panel {
             throw new IllegalArgumentException("Incompatible layout type: " + layout.getClass().getSimpleName());
         }
         AbstractSwingLayout swingLayout = (AbstractSwingLayout)layout;
-        panel.setLayout(swingLayout.getNativeLayout());
+        panel.setLayout(swingLayout.getNativeLayoutFor(panel));
         this.layout = swingLayout;
     }
 

@@ -3,6 +3,7 @@ package hu.webarticum.abstract_gui.lanterna;
 import hu.webarticum.abstract_gui.framework.Factory;
 import hu.webarticum.abstract_gui.framework.Label;
 import hu.webarticum.abstract_gui.framework.Layout;
+import hu.webarticum.abstract_gui.framework.LinearLayout;
 import hu.webarticum.abstract_gui.framework.TextField;
 import hu.webarticum.abstract_gui.framework.TextualContent;
 
@@ -39,6 +40,11 @@ public class LanternaFactory implements Factory {
         return new LanternaBorderLayout(environment);
     }
 
+    @Override
+    public LanternaLinearLayout createLinearLayout(LinearLayout.Direction direction) {
+        return new LanternaLinearLayout(environment, direction);
+    }
+    
     @Override
     public LanternaGridLayout createGridLayout(int columns) {
         return new LanternaGridLayout(environment, columns);

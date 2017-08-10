@@ -4,6 +4,7 @@ import hu.webarticum.abstract_gui.framework.Environment;
 import hu.webarticum.abstract_gui.framework.Factory;
 import hu.webarticum.abstract_gui.framework.Label;
 import hu.webarticum.abstract_gui.framework.Layout;
+import hu.webarticum.abstract_gui.framework.LinearLayout;
 import hu.webarticum.abstract_gui.framework.TextField;
 import hu.webarticum.abstract_gui.framework.TextualContent;
 
@@ -38,6 +39,11 @@ public class SwingFactory implements Factory {
     @Override
     public SwingBorderLayout createBorderLayout() {
         return new SwingBorderLayout(environment);
+    }
+    
+    @Override
+    public SwingLinearLayout createLinearLayout(LinearLayout.Direction direction) {
+        return new SwingLinearLayout(environment, direction);
     }
 
     @Override

@@ -1,10 +1,9 @@
 package hu.webarticum.abstract_gui.swing;
 
-import hu.webarticum.abstract_gui.framework.Component;
-import hu.webarticum.abstract_gui.framework.Environment;
+import hu.webarticum.abstract_gui.framework.EnvironmentMember;
 
 
-abstract public class AbstractSwingEnvironmentMember implements Component {
+abstract public class AbstractSwingEnvironmentMember implements EnvironmentMember {
     
     private final SwingEnvironment environment;
     
@@ -13,7 +12,7 @@ abstract public class AbstractSwingEnvironmentMember implements Component {
     }
     
     @Override
-    public Environment getEnvironment() {
+    public SwingEnvironment getEnvironment() {
         return environment;
     }
     

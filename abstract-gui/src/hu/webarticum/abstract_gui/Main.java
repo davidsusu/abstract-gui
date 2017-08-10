@@ -7,6 +7,7 @@ import hu.webarticum.abstract_gui.framework.EventListener;
 import hu.webarticum.abstract_gui.framework.Factory;
 import hu.webarticum.abstract_gui.framework.HtmlContent;
 import hu.webarticum.abstract_gui.framework.Label;
+import hu.webarticum.abstract_gui.framework.LinearLayout;
 import hu.webarticum.abstract_gui.framework.Metrics;
 import hu.webarticum.abstract_gui.framework.Panel;
 import hu.webarticum.abstract_gui.framework.TextField;
@@ -28,7 +29,12 @@ public class Main {
         final Window window = factory.createWindow(textRepository.createMlPlainContent("windowtitle"));
         final Panel panel = window.getRootPanel();
         
+        final Panel topPanel = factory.createPanel();
+        topPanel.setLayout(factory.createLinearLayout(LinearLayout.Direction.VERTICAL));
+        
         final Label topLabel = factory.createLabel(textRepository.createMlPlainContent("toplabel"));
+        final Button topButton1 = factory.createButton(textRepository.createMlPlainContent("topbutton1"));
+        final Button topButton2 = factory.createButton(textRepository.createMlPlainContent("topbutton2"));
         
         final Button aButton = factory.createButton(new HtmlContent("<i><u>FIX</u></i>"));
 
@@ -50,8 +56,12 @@ public class Main {
         
         final Panel centerPanel = factory.createPanel(factory.createAbsoluteLayout());
         centerPanel.add(inputField, new Metrics(25, 25));
+
+        topPanel.add(topLabel);
+        topPanel.add(topButton1);
+        topPanel.add(topButton2);
         
-        panel.add(topLabel, BorderLayout.Location.TOP);
+        panel.add(topPanel, BorderLayout.Location.TOP);
         panel.add(aButton, BorderLayout.Location.LEFT);
         panel.add(centerPanel, BorderLayout.Location.CENTER);
         panel.add(anOtherButton, BorderLayout.Location.RIGHT);
@@ -71,6 +81,10 @@ public class Main {
                     return "Tesztablak";
                 } else if (key.equals("toplabel")) {
                     return "Felső szöveg";
+                } else if (key.equals("topbutton1")) {
+                    return "Felső gomb 1";
+                } else if (key.equals("topbutton2")) {
+                    return "Felső gomb 2";
                 } else if (key.equals("patterntext")) {
                     return "HU (<u>%s</u>) (%.2f)";
                 } else if (key.equals("switchlang")) {
@@ -83,6 +97,10 @@ public class Main {
                     return "Test window";
                 } else if (key.equals("toplabel")) {
                     return "Top label";
+                } else if (key.equals("topbutton1")) {
+                    return "Top button 1";
+                } else if (key.equals("topbutton2")) {
+                    return "Top button 2";
                 } else if (key.equals("patterntext")) {
                     return "EN (<u>%s</u>) (%.2f)";
                 } else if (key.equals("switchlang")) {

@@ -1,8 +1,8 @@
 package hu.webarticum.abstract_gui.lanterna;
 
-import hu.webarticum.abstract_gui.framework.Component;
+import hu.webarticum.abstract_gui.framework.EnvironmentMember;
 
-abstract public class AbstractLanternaEnvironmentMember implements Component {
+abstract public class AbstractLanternaEnvironmentMember implements EnvironmentMember {
 
     private final LanternaEnvironment environment;
     

@@ -27,7 +27,11 @@ abstract public class AbstractSwingLayout implements Layout {
             throw new IllegalArgumentException("Incompatible component type: " + component.getClass().getSimpleName());
         }
     }
-    
+
     abstract public LayoutManager getNativeLayout();
+
+    public LayoutManager getNativeLayoutFor(java.awt.Container nativeContainer) {
+        return getNativeLayout();
+    }
     
 }

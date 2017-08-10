@@ -10,6 +10,8 @@ public interface Factory extends EnvironmentMember {
     public AbsoluteLayout createAbsoluteLayout();
     
     public BorderLayout createBorderLayout();
+
+    public LinearLayout createLinearLayout(LinearLayout.Direction direction);
     
     public GridLayout createGridLayout(int columns);
     
