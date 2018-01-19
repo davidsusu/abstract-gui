@@ -1,0 +1,4 @@
+rootProject.name = 'abstract-gui-swing'
+
+include ':abstract-gui-core'
+project(':abstract-gui-core').projectDir = new File(settingsDir, '../abstract-gui-core')
