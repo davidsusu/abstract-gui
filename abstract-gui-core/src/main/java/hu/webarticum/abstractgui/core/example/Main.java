@@ -3,6 +3,7 @@ package hu.webarticum.abstractgui.core.example;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import hu.webarticum.abstractgui.core.framework.BorderLayout;
 import hu.webarticum.abstractgui.core.framework.Button;
@@ -38,6 +39,7 @@ public class Main {
     	huTextMap.put("toplabel", new PlainText("Felső szöveg"));
     	huTextMap.put("topbutton1", new PlainText("Felső gomb 1"));
     	huTextMap.put("topbutton2", new PlainText("Felső gomb 2"));
+    	huTextMap.put("topcounterbutton", new HtmlText("<b>Számláló:<b> <u style=\"color:red;\">%s</u>"));
     	huTextMap.put("patterntext", new HtmlText("HU (<u>%s</u>) (%.2f)"));
     	huTextMap.put("switchlang", new HtmlText("<i>Nyelv váltása</i>"));
     	repository.put(hu, new MapTextRepository(huTextMap));
@@ -47,6 +49,7 @@ public class Main {
     	enTextMap.put("toplabel", new PlainText("Top label"));
     	enTextMap.put("topbutton1", new PlainText("Top button 1"));
     	enTextMap.put("topbutton2", new PlainText("Top button 2"));
+    	enTextMap.put("topcounterbutton", new HtmlText("<b>Counter:<b> <u style=\"color:red;\">%s</u>"));
     	enTextMap.put("patterntext", new HtmlText("EN (<u>%s</u>) (%.2f)"));
     	enTextMap.put("switchlang", new HtmlText("<i>Switch language</i>"));
     	repository.put(en, new MapTextRepository(enTextMap));
@@ -65,7 +68,19 @@ public class Main {
         final Label topLabel = factory.createLabel(localizedRepository.getDynamic("toplabel"));
         final Button topButton1 = factory.createButton(localizedRepository.getDynamic("topbutton1"));
         final Button topButton2 = factory.createButton(localizedRepository.getDynamic("topbutton2"));
-        
+
+        final AtomicInteger counter = new AtomicInteger(0);
+        final Button topCounterButton = factory.createButton(new FormattedText(localizedRepository.getDynamic("topcounterbutton"), counter));
+        topCounterButton.on(Event.Type.ACTION, new EventListener() {
+			
+			@Override
+			public void occured(Event event) {
+				counter.incrementAndGet();
+				topCounterButton.refresh();
+			}
+			
+		});
+
         final Button aButton = factory.createButton(new HtmlText("<i><u>FIX</u></i>"));
 
         final TextField inputField = factory.createTextField();
@@ -90,6 +105,7 @@ public class Main {
         topPanel.add(topLabel);
         topPanel.add(topButton1);
         topPanel.add(topButton2);
+        topPanel.add(topCounterButton);
         
         panel.add(topPanel, BorderLayout.Location.TOP);
         panel.add(aButton, BorderLayout.Location.LEFT);

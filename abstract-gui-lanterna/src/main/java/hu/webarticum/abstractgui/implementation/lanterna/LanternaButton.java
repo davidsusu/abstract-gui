@@ -7,9 +7,7 @@ import hu.webarticum.abstractgui.core.framework.Event;
 import hu.webarticum.abstractgui.core.framework.text.PlainText;
 import hu.webarticum.abstractgui.core.framework.text.Text;
 
-public class LanternaButton extends AbstractLanternaComponent implements Button {
-    
-    private Text labelContent;
+public class LanternaButton extends AbstractLabeledLanternaComponent implements Button {
     
     private final com.googlecode.lanterna.gui2.Button button;
     
@@ -17,11 +15,10 @@ public class LanternaButton extends AbstractLanternaComponent implements Button 
         this(environment, new PlainText(label));
     }
 
-    LanternaButton(LanternaEnvironment environment, Text labelContent) {
-        super(environment);
+    LanternaButton(LanternaEnvironment environment, Text text) {
+        super(environment, text);
         
-        this.labelContent = labelContent;
-        button = new com.googlecode.lanterna.gui2.Button(labelContent.toString(), new Runnable() {
+        this.button = new com.googlecode.lanterna.gui2.Button(text.toString(), new Runnable() {
             
             @Override
             public void run() {
@@ -33,12 +30,12 @@ public class LanternaButton extends AbstractLanternaComponent implements Button 
 
     @Override
     public void refresh() {
-        button.setLabel(labelContent.toString());
+        button.setLabel(getLabel());
     }
 
     @Override
     public Component getNativeComponent() {
         return button;
     }
-    
+
 }
