@@ -6,20 +6,20 @@ import javax.swing.JButton;
 
 import hu.webarticum.abstractgui.core.framework.Button;
 import hu.webarticum.abstractgui.core.framework.Event;
-import hu.webarticum.abstractgui.core.framework.PlainContent;
-import hu.webarticum.abstractgui.core.framework.TextualContent;
+import hu.webarticum.abstractgui.core.framework.text.PlainText;
+import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public class SwingButton extends AbstractSwingComponent implements Button {
 
-    private TextualContent labelContent;
+    private Text labelContent;
     
     private final JButton button;
 
     SwingButton(SwingEnvironment environment, String label) {
-        this(environment, new PlainContent(label));
+        this(environment, new PlainText(label));
     }
 
-    SwingButton(SwingEnvironment environment, TextualContent labelContent) {
+    SwingButton(SwingEnvironment environment, Text labelContent) {
         super(environment);
         
         this.labelContent = labelContent;

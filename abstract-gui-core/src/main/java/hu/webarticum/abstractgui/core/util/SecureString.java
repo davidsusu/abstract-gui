@@ -1,4 +1,4 @@
-package hu.webarticum.abstractgui.core.framework;
+package hu.webarticum.abstractgui.core.util;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;

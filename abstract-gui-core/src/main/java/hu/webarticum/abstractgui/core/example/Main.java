@@ -1,6 +1,8 @@
 package hu.webarticum.abstractgui.core.example;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import hu.webarticum.abstractgui.core.framework.BorderLayout;
 import hu.webarticum.abstractgui.core.framework.Button;
@@ -9,45 +11,74 @@ import hu.webarticum.abstractgui.core.framework.EnvironmentDetector;
 import hu.webarticum.abstractgui.core.framework.Event;
 import hu.webarticum.abstractgui.core.framework.EventListener;
 import hu.webarticum.abstractgui.core.framework.Factory;
-import hu.webarticum.abstractgui.core.framework.HtmlContent;
 import hu.webarticum.abstractgui.core.framework.Label;
 import hu.webarticum.abstractgui.core.framework.LinearLayout;
 import hu.webarticum.abstractgui.core.framework.Metrics;
 import hu.webarticum.abstractgui.core.framework.Panel;
 import hu.webarticum.abstractgui.core.framework.TextField;
 import hu.webarticum.abstractgui.core.framework.Window;
-import hu.webarticum.abstractgui.core.framework.i18n.AbstractTextRepository;
+import hu.webarticum.abstractgui.core.framework.text.FormattedText;
+import hu.webarticum.abstractgui.core.framework.text.HtmlText;
+import hu.webarticum.abstractgui.core.framework.text.LocalizedMultilingualTextRepository;
+import hu.webarticum.abstractgui.core.framework.text.MapTextRepository;
+import hu.webarticum.abstractgui.core.framework.text.PlainText;
+import hu.webarticum.abstractgui.core.framework.text.SimpleMultilingualTextRepository;
+import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public class Main {
     
     public static void main(String[] args) {
-        final TestTextRepository textRepository = new TestTextRepository();
+    	final Locale hu = new Locale("hu");
+    	final Locale en = new Locale("en_US");
+    	
+    	final SimpleMultilingualTextRepository repository = new SimpleMultilingualTextRepository();
+    	
+    	final Map<Object, Text> huTextMap = new HashMap<Object, Text>();
+    	huTextMap.put("windowtitle", new PlainText("Tesztablak"));
+    	huTextMap.put("toplabel", new PlainText("Felső szöveg"));
+    	huTextMap.put("topbutton1", new PlainText("Felső gomb 1"));
+    	huTextMap.put("topbutton2", new PlainText("Felső gomb 2"));
+    	huTextMap.put("patterntext", new HtmlText("HU (<u>%s</u>) (%.2f)"));
+    	huTextMap.put("switchlang", new HtmlText("<i>Nyelv váltása</i>"));
+    	repository.put(hu, new MapTextRepository(huTextMap));
         
+    	final Map<Object, Text> enTextMap = new HashMap<Object, Text>();
+    	enTextMap.put("windowtitle", new PlainText("Test window"));
+    	enTextMap.put("toplabel", new PlainText("Top label"));
+    	enTextMap.put("topbutton1", new PlainText("Top button 1"));
+    	enTextMap.put("topbutton2", new PlainText("Top button 2"));
+    	enTextMap.put("patterntext", new HtmlText("EN (<u>%s</u>) (%.2f)"));
+    	enTextMap.put("switchlang", new HtmlText("<i>Switch language</i>"));
+    	repository.put(en, new MapTextRepository(enTextMap));
+    	
+    	final LocalizedMultilingualTextRepository localizedRepository = new LocalizedMultilingualTextRepository(repository);
+    	localizedRepository.setLocale(hu);
+    	
         final Environment environment = EnvironmentDetector.getDefaultEnvironment();
         final Factory factory = environment.getFactory();
-        final Window window = factory.createWindow(textRepository.createMlPlainContent("windowtitle"));
+        final Window window = factory.createWindow(localizedRepository.getDynamic("windowtitle"));
         final Panel panel = window.getRootPanel();
         
         final Panel topPanel = factory.createPanel();
         topPanel.setLayout(factory.createLinearLayout(LinearLayout.Direction.VERTICAL));
         
-        final Label topLabel = factory.createLabel(textRepository.createMlPlainContent("toplabel"));
-        final Button topButton1 = factory.createButton(textRepository.createMlPlainContent("topbutton1"));
-        final Button topButton2 = factory.createButton(textRepository.createMlPlainContent("topbutton2"));
+        final Label topLabel = factory.createLabel(localizedRepository.getDynamic("toplabel"));
+        final Button topButton1 = factory.createButton(localizedRepository.getDynamic("topbutton1"));
+        final Button topButton2 = factory.createButton(localizedRepository.getDynamic("topbutton2"));
         
-        final Button aButton = factory.createButton(new HtmlContent("<i><u>FIX</u></i>"));
+        final Button aButton = factory.createButton(new HtmlText("<i><u>FIX</u></i>"));
 
         final TextField inputField = factory.createTextField();
         inputField.setValue("initial");
+
+        final Button anOtherButton = factory.createButton(new FormattedText(localizedRepository.getDynamic("patterntext"), "fix", 12.34d));
         
-        final Button anOtherButton = factory.createButton(textRepository.createFormatHtmlContent(textRepository.createMlHtmlContent("patterntext"), "fix", 12.34d));
-        
-        final Button langSwitcherButton = factory.createButton(textRepository.createMlHtmlContent("switchlang"));
+        final Button langSwitcherButton = factory.createButton(localizedRepository.getDynamic("switchlang"));
         langSwitcherButton.on(Event.Type.ACTION, new EventListener() {
             
             @Override
             public void occured(Event event) {
-                textRepository.setLocale(new Locale(textRepository.getLocale().toString().equalsIgnoreCase("hu") ? "en_US" : "hu"));
+            	localizedRepository.setLocale(localizedRepository.getLocale().equals(hu) ? en : hu);
                 window.refresh();
             }
             
@@ -67,59 +98,6 @@ public class Main {
         panel.add(langSwitcherButton, BorderLayout.Location.BOTTOM);
         
         window.open();
-    }
-    
-    private static class TestTextRepository extends AbstractTextRepository {
-
-        private Locale locale = new Locale("hu");
-        
-        @Override
-        public String getText(Object key) {
-            if (locale.toString().equalsIgnoreCase("hu")) {
-                if (key.equals("windowtitle")) {
-                    return "Tesztablak";
-                } else if (key.equals("toplabel")) {
-                    return "Felső szöveg";
-                } else if (key.equals("topbutton1")) {
-                    return "Felső gomb 1";
-                } else if (key.equals("topbutton2")) {
-                    return "Felső gomb 2";
-                } else if (key.equals("patterntext")) {
-                    return "HU (<u>%s</u>) (%.2f)";
-                } else if (key.equals("switchlang")) {
-                    return "<i>Nyelv váltása</i>";
-                } else {
-                    return "";
-                }
-            } else {
-                if (key.equals("windowtitle")) {
-                    return "Test window";
-                } else if (key.equals("toplabel")) {
-                    return "Top label";
-                } else if (key.equals("topbutton1")) {
-                    return "Top button 1";
-                } else if (key.equals("topbutton2")) {
-                    return "Top button 2";
-                } else if (key.equals("patterntext")) {
-                    return "EN (<u>%s</u>) (%.2f)";
-                } else if (key.equals("switchlang")) {
-                    return "<i>Switch language</i>";
-                } else {
-                    return "";
-                }
-            }
-        }
-
-        @Override
-        public Locale getLocale() {
-            return locale;
-        }
-
-        @Override
-        public void setLocale(Locale locale) {
-            this.locale = locale;
-        }
-        
     }
     
 }

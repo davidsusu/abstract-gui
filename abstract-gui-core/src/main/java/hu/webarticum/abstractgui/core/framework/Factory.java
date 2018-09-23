@@ -1,11 +1,12 @@
 package hu.webarticum.abstractgui.core.framework;
 
+import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public interface Factory extends EnvironmentMember {
 
     public Window createWindow(String title);
 
-    public Window createWindow(TextualContent titleContent);
+    public Window createWindow(Text title);
 
     public AbsoluteLayout createAbsoluteLayout();
     
@@ -21,11 +22,11 @@ public interface Factory extends EnvironmentMember {
 
     public Button createButton(String label);
 
-    public Button createButton(TextualContent labelContent);
+    public Button createButton(Text label);
 
     public Label createLabel(String label);
 
-    public Label createLabel(TextualContent labelContent);
+    public Label createLabel(Text label);
 
     public TextField createTextField();
     

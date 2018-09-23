@@ -9,9 +9,9 @@ public class EnvironmentDetector {
     
     static private List<String> environmentClassNames = new ArrayList<String>();
     static {
-        registerEnvironmentClass("hu.webarticum.abstract_gui.swing.SwingEnvironment");
-        registerEnvironmentClass("hu.webarticum.abstract_gui.android.AndroidEnvironment");
-        registerEnvironmentClass("hu.webarticum.abstract_gui.lanterna.LanternaEnvironment");
+        registerEnvironmentClass("hu.webarticum.abstractgui.implementation.swing.SwingEnvironment");
+        registerEnvironmentClass("hu.webarticum.abstractgui.implementation.android.AndroidEnvironment");
+        registerEnvironmentClass("hu.webarticum.abstractgui.implementation.lanterna.LanternaEnvironment");
     }
     
     static private Environment defaultEnvironment = null;

@@ -5,13 +5,13 @@ import javax.swing.JFrame;
 import hu.webarticum.abstractgui.core.framework.Event;
 import hu.webarticum.abstractgui.core.framework.EventListener;
 import hu.webarticum.abstractgui.core.framework.GeneralListenable;
-import hu.webarticum.abstractgui.core.framework.PlainContent;
-import hu.webarticum.abstractgui.core.framework.TextualContent;
 import hu.webarticum.abstractgui.core.framework.Window;
+import hu.webarticum.abstractgui.core.framework.text.PlainText;
+import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public class SwingWindow extends AbstractSwingEnvironmentMember implements Window {
     
-    private TextualContent titleContent;
+    private Text titleContent;
     
     private final JFrame frame;
     
@@ -20,10 +20,10 @@ public class SwingWindow extends AbstractSwingEnvironmentMember implements Windo
     protected GeneralListenable generalListenable = new GeneralListenable();
     
     SwingWindow(SwingEnvironment environment, String title) {
-        this(environment, new PlainContent(title));
+        this(environment, new PlainText(title));
     }
     
-    SwingWindow(SwingEnvironment environment, TextualContent titleContent) {
+    SwingWindow(SwingEnvironment environment, Text titleContent) {
         super(environment);
         
         this.titleContent = titleContent;

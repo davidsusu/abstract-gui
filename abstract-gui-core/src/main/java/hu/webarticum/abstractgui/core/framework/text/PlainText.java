@@ -1,12 +1,14 @@
-package hu.webarticum.abstractgui.core.framework;
+package hu.webarticum.abstractgui.core.framework.text;
 
-public class PlainContent implements TextualContent {
+import hu.webarticum.abstractgui.core.util.HtmlUtil;
+
+public class PlainText implements Text {
     
     private final String text;
     
     private String html = null;
     
-    public PlainContent(String text) {
+    public PlainText(String text) {
         this.text = text;
     }
     

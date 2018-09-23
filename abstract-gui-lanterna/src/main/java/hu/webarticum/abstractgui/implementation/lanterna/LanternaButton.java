@@ -4,20 +4,20 @@ import com.googlecode.lanterna.gui2.Component;
 
 import hu.webarticum.abstractgui.core.framework.Button;
 import hu.webarticum.abstractgui.core.framework.Event;
-import hu.webarticum.abstractgui.core.framework.PlainContent;
-import hu.webarticum.abstractgui.core.framework.TextualContent;
+import hu.webarticum.abstractgui.core.framework.text.PlainText;
+import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public class LanternaButton extends AbstractLanternaComponent implements Button {
     
-    private TextualContent labelContent;
+    private Text labelContent;
     
     private final com.googlecode.lanterna.gui2.Button button;
     
     LanternaButton(LanternaEnvironment environment, String label) {
-        this(environment, new PlainContent(label));
+        this(environment, new PlainText(label));
     }
 
-    LanternaButton(LanternaEnvironment environment, TextualContent labelContent) {
+    LanternaButton(LanternaEnvironment environment, Text labelContent) {
         super(environment);
         
         this.labelContent = labelContent;

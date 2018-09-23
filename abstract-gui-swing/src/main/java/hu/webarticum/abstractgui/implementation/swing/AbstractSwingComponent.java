@@ -4,7 +4,7 @@ import hu.webarticum.abstractgui.core.framework.Component;
 import hu.webarticum.abstractgui.core.framework.Event;
 import hu.webarticum.abstractgui.core.framework.EventListener;
 import hu.webarticum.abstractgui.core.framework.GeneralListenable;
-import hu.webarticum.abstractgui.core.framework.TextualContent;
+import hu.webarticum.abstractgui.core.framework.text.Text;
 
 
 abstract public class AbstractSwingComponent extends AbstractSwingEnvironmentMember implements Component {
@@ -15,7 +15,7 @@ abstract public class AbstractSwingComponent extends AbstractSwingEnvironmentMem
         super(environment);
     }
     
-    protected String contentToLabelString(TextualContent content) {
+    protected String contentToLabelString(Text content) {
         if (content.isPlain()) {
             String labelText = content.toString();
             return labelText.matches("^<html") ? " " + labelText : labelText;

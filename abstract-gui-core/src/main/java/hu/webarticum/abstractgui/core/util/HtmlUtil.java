@@ -1,4 +1,4 @@
-package hu.webarticum.abstractgui.core.framework;
+package hu.webarticum.abstractgui.core.util;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;

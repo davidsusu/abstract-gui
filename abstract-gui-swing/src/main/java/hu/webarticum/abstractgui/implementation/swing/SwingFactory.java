@@ -6,7 +6,7 @@ import hu.webarticum.abstractgui.core.framework.Label;
 import hu.webarticum.abstractgui.core.framework.Layout;
 import hu.webarticum.abstractgui.core.framework.LinearLayout;
 import hu.webarticum.abstractgui.core.framework.TextField;
-import hu.webarticum.abstractgui.core.framework.TextualContent;
+import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public class SwingFactory implements Factory {
     
@@ -27,7 +27,7 @@ public class SwingFactory implements Factory {
     }
 
     @Override
-    public SwingWindow createWindow(TextualContent titleContent) {
+    public SwingWindow createWindow(Text titleContent) {
         return new SwingWindow(environment, titleContent);
     }
 
@@ -70,7 +70,7 @@ public class SwingFactory implements Factory {
     }
 
     @Override
-    public SwingButton createButton(TextualContent labelContent) {
+    public SwingButton createButton(Text labelContent) {
         return new SwingButton(environment, labelContent);
     }
 
@@ -80,7 +80,7 @@ public class SwingFactory implements Factory {
     }
 
     @Override
-    public Label createLabel(TextualContent labelContent) {
+    public Label createLabel(Text labelContent) {
         return new SwingLabel(environment, labelContent);
     }
 

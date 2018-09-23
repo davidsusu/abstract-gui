@@ -5,7 +5,7 @@ import hu.webarticum.abstractgui.core.framework.Label;
 import hu.webarticum.abstractgui.core.framework.Layout;
 import hu.webarticum.abstractgui.core.framework.LinearLayout;
 import hu.webarticum.abstractgui.core.framework.TextField;
-import hu.webarticum.abstractgui.core.framework.TextualContent;
+import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public class LanternaFactory implements Factory {
     
@@ -26,7 +26,7 @@ public class LanternaFactory implements Factory {
     }
 
     @Override
-    public LanternaWindow createWindow(TextualContent titleContent) {
+    public LanternaWindow createWindow(Text titleContent) {
         return new LanternaWindow(environment, titleContent);
     }
 
@@ -69,7 +69,7 @@ public class LanternaFactory implements Factory {
     }
 
     @Override
-    public LanternaButton createButton(TextualContent labelContent) {
+    public LanternaButton createButton(Text labelContent) {
         return new LanternaButton(environment, labelContent);
     }
 
@@ -79,7 +79,7 @@ public class LanternaFactory implements Factory {
     }
 
     @Override
-    public Label createLabel(TextualContent labelContent) {
+    public Label createLabel(Text labelContent) {
         return new LanternaLabel(environment, labelContent);
     }
 

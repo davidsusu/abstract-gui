@@ -6,13 +6,13 @@ import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
 import hu.webarticum.abstractgui.core.framework.Event;
 import hu.webarticum.abstractgui.core.framework.EventListener;
 import hu.webarticum.abstractgui.core.framework.GeneralListenable;
-import hu.webarticum.abstractgui.core.framework.PlainContent;
-import hu.webarticum.abstractgui.core.framework.TextualContent;
 import hu.webarticum.abstractgui.core.framework.Window;
+import hu.webarticum.abstractgui.core.framework.text.PlainText;
+import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public class LanternaWindow extends AbstractLanternaEnvironmentMember implements Window {
 
-    private TextualContent titleContent;
+    private Text titleContent;
     
     private boolean isAttachedToScreen = false;
     
@@ -23,10 +23,10 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
     protected GeneralListenable generalListenable = new GeneralListenable();
     
     LanternaWindow(LanternaEnvironment environment, String title) {
-        this(environment, new PlainContent(title));
+        this(environment, new PlainText(title));
     }
     
-    LanternaWindow(LanternaEnvironment environment, TextualContent titleContent) {
+    LanternaWindow(LanternaEnvironment environment, Text titleContent) {
         super(environment);
         
         this.titleContent = titleContent;

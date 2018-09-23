@@ -1,7 +1,7 @@
-package hu.webarticum.abstractgui.core.framework;
+package hu.webarticum.abstractgui.core.framework.text;
 
-public interface TextualContent {
-    
+public interface Text {
+
     public String toHtml();
     
     public String toString();
