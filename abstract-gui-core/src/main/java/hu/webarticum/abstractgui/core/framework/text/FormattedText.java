@@ -40,32 +40,29 @@ public class FormattedText implements LocalizedText {
 	public String toHtml() {
 		Object[] sourceViews = new Object[arguments.length];
 		for (int i = 0; i < arguments.length; i++) {
-			if (arguments[i] instanceof Text) {
-				sourceViews[i] = new HtmlSourceView((Text) arguments[i]);
-			} else if (isFormattable(arguments[i])) {
-				sourceViews[i] = arguments[i];
+			Object argument = arguments[i];
+			if (argument instanceof Text) {
+				sourceViews[i] = new HtmlSourceView((Text) argument);
+			} else if (
+				argument instanceof Boolean ||
+				argument instanceof Byte ||
+				argument instanceof Short ||
+				argument instanceof Integer ||
+				argument instanceof Long ||
+				argument instanceof Float ||
+				argument instanceof Double
+			) {
+				sourceViews[i] = argument;
 			} else {
-				sourceViews[i] = new PlainText(HtmlUtil.textToHtml(arguments[i].toString()));
+				sourceViews[i] = new PlainText(HtmlUtil.textToHtml(argument.toString()));
 			}
 		}
-		return format(formatText.toString(), sourceViews);
+		return format(formatText.toHtml(), sourceViews);
 	}
 	
-	private boolean isFormattable(Object object) {
-		if (object instanceof Number) {
-			return true;
-		}
-		
-		if (object instanceof Boolean) {
-			return true;
-		}
-		
-		return false;
-	}
-
 	@Override
 	public String toString() {
-		return format(formatText.toHtml(), arguments);
+		return format(formatText.toString(), arguments);
 	}
 
 	private String format(String format, Object[] argumentObjects) {
