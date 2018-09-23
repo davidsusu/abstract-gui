@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import hu.webarticum.abstractgui.core.framework.BorderLayout;
 import hu.webarticum.abstractgui.core.framework.Button;
 import hu.webarticum.abstractgui.core.framework.Environment;
-import hu.webarticum.abstractgui.core.framework.EnvironmentDetector;
 import hu.webarticum.abstractgui.core.framework.Event;
 import hu.webarticum.abstractgui.core.framework.EventListener;
 import hu.webarticum.abstractgui.core.framework.Factory;
@@ -26,9 +25,18 @@ import hu.webarticum.abstractgui.core.framework.text.PlainText;
 import hu.webarticum.abstractgui.core.framework.text.SimpleMultilingualTextRepository;
 import hu.webarticum.abstractgui.core.framework.text.Text;
 
-public class Main {
+public class SimpleExample implements Runnable {
     
-    public static void main(String[] args) {
+	private final Environment environment;
+	
+	
+	public SimpleExample(Environment environment) {
+		this.environment = environment;
+	}
+	
+	
+	@Override
+    public void run() {
     	final Locale hu = new Locale("hu");
     	final Locale en = new Locale("en_US");
     	
@@ -57,7 +65,6 @@ public class Main {
     	final LocalizedMultilingualTextRepository localizedRepository = new LocalizedMultilingualTextRepository(repository);
     	localizedRepository.setLocale(hu);
     	
-        final Environment environment = EnvironmentDetector.getDefaultEnvironment();
         final Factory factory = environment.getFactory();
         final Window window = factory.createWindow(localizedRepository.getDynamic("windowtitle"));
         final Panel panel = window.getRootPanel();
