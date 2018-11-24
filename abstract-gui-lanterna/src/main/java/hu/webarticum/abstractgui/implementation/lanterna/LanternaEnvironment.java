@@ -13,6 +13,8 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import hu.webarticum.abstractgui.core.framework.Environment;
 
 public class LanternaEnvironment implements Environment {
+    
+    private final LanternaFactory factory = new LanternaFactory(this);
 
     private MultiWindowTextGUI gui = null;
     
@@ -25,7 +27,7 @@ public class LanternaEnvironment implements Environment {
     
     @Override
     public LanternaFactory getFactory() {
-        return new LanternaFactory(this);
+        return factory;
     }
 
     @Override
@@ -33,6 +35,8 @@ public class LanternaEnvironment implements Environment {
         try {
             Class.forName("com.googlecode.lanterna.gui2.Button");
             
+            
+            // FIXME: is this necessary?
             Class<?> terminalFactoryClass = Class.forName("com.googlecode.lanterna.terminal.DefaultTerminalFactory");
             Object terminalFactory = terminalFactoryClass.newInstance();
             terminalFactoryClass.getMethod("setAutoOpenTerminalEmulatorWindow", boolean.class).invoke(terminalFactory, false);
@@ -80,6 +84,11 @@ public class LanternaEnvironment implements Environment {
             try {
                 screen.startScreen();
             } catch (IOException e) {
+                try {
+                    screen.close();
+                } catch (IOException ee) {
+                    // nothing to do
+                }
                 return null;
             }
             gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.BLUE));
