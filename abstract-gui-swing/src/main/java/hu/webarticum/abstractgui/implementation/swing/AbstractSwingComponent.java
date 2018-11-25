@@ -15,15 +15,6 @@ abstract public class AbstractSwingComponent extends AbstractSwingEnvironmentMem
         super(environment);
     }
     
-    protected String contentToLabelString(Text content) {
-        if (content.isPlain()) {
-            String labelText = content.toString();
-            return labelText.matches("^<html") ? " " + labelText : labelText;
-        } else {
-            return "<html>" + content.toHtml() + "</html>";
-        }
-    }
-
     @Override
     public void on(Object eventType, EventListener listener) {
         generalListenable.on(eventType, listener);
@@ -37,6 +28,15 @@ abstract public class AbstractSwingComponent extends AbstractSwingEnvironmentMem
     @Override
     public void runListeners(Object eventType, Event event) {
         generalListenable.runListeners(eventType, event);
+    }
+
+    protected String contentToLabelString(Text content) {
+        if (content.isPlain()) {
+            String labelText = content.toString();
+            return labelText.matches("^<html") ? " " + labelText : labelText;
+        } else {
+            return "<html>" + content.toHtml() + "</html>";
+        }
     }
 
     abstract public java.awt.Component getNativeComponent();

@@ -15,7 +15,7 @@ public class PlainText implements Text {
     @Override
     public String toHtml() {
         if (html == null) {
-            html = HtmlUtil.textToHtml(text);
+            html = HtmlUtil.plainToHtml(text);
         }
         return html;
     }

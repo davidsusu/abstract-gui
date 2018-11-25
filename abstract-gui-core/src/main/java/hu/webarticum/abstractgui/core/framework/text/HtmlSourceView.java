@@ -12,7 +12,7 @@ public class HtmlSourceView implements Text {
     
     @Override
     public String toHtml() {
-        return HtmlUtil.textToHtml(toString());
+        return HtmlUtil.plainToHtml(toString());
     }
 
     @Override

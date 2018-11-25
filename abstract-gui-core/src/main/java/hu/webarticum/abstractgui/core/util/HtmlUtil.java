@@ -261,7 +261,7 @@ public class HtmlUtil {
         replacements.put("euro", "\u20AC");
     }
     
-    public static String htmlToString(String html) {
+    public static String htmlToPlain(String html) {
         StringBuffer textBuilder = new StringBuffer();
         Pattern pattern = Pattern.compile("(\\s+)|(&(?:(\\w+)|#(\\d+)|#x([a-fA-F0-9]+));)|(<!--.*?-->)|(<(/)?([\\w\\-:]+)\\b([^>\"]|\"[^\"]*\"|'[^']*')*>)");
         Matcher matcher = pattern.matcher(html);
@@ -319,7 +319,7 @@ public class HtmlUtil {
         return textBuilder.toString();
     }
     
-    public static String textToHtml(String text) {
+    public static String plainToHtml(String text) {
         StringBuffer htmlBuilder = new StringBuffer();
         Pattern pattern = Pattern.compile("  +|[&<>\"]");
         Matcher matcher = pattern.matcher(text);

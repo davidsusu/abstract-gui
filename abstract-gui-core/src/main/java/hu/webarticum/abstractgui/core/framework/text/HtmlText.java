@@ -20,7 +20,7 @@ public class HtmlText implements Text {
     @Override
     public String toString() {
         if (text == null) {
-            text = HtmlUtil.htmlToString(html);
+            text = HtmlUtil.htmlToPlain(html);
         }
         return text;
     }

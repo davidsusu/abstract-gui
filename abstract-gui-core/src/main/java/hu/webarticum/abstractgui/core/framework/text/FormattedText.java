@@ -54,7 +54,7 @@ public class FormattedText implements LocalizedText {
 			) {
 				sourceViews[i] = argument;
 			} else {
-				sourceViews[i] = new PlainText(HtmlUtil.textToHtml(argument.toString()));
+				sourceViews[i] = new PlainText(HtmlUtil.plainToHtml(argument.toString()));
 			}
 		}
 		return format(formatText.toHtml(), sourceViews);
