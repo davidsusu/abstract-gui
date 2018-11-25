@@ -1,10 +1,7 @@
 package hu.webarticum.abstractgui.implementation.lanterna;
 
+import hu.webarticum.abstractgui.core.framework.Container;
 import hu.webarticum.abstractgui.core.framework.Factory;
-import hu.webarticum.abstractgui.core.framework.Label;
-import hu.webarticum.abstractgui.core.framework.Layout;
-import hu.webarticum.abstractgui.core.framework.LinearLayout;
-import hu.webarticum.abstractgui.core.framework.TextField;
 import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public class LanternaFactory implements Factory {
@@ -21,46 +18,40 @@ public class LanternaFactory implements Factory {
     }
 
     @Override
-    public LanternaWindow createWindow(String title) {
-        return new LanternaWindow(environment, title);
+    public LanternaWindow createWindow(Container container, String title) {
+        return new LanternaWindow(environment, checkContainer(container), title);
     }
 
     @Override
-    public LanternaWindow createWindow(Text titleContent) {
-        return new LanternaWindow(environment, titleContent);
+    public LanternaWindow createWindow(Container container, Text titleContent) {
+        return new LanternaWindow(environment, checkContainer(container), titleContent);
     }
 
-    @Override
-    public LanternaAbsoluteLayout createAbsoluteLayout() {
-        return new LanternaAbsoluteLayout(environment);
-    }
-
-    @Override
-    public LanternaBorderLayout createBorderLayout() {
-        return new LanternaBorderLayout(environment);
-    }
-
-    @Override
-    public LanternaLinearLayout createLinearLayout(LinearLayout.Direction direction) {
-        return new LanternaLinearLayout(environment, direction);
-    }
-    
-    @Override
-    public LanternaGridLayout createGridLayout(int columns) {
-        return new LanternaGridLayout(environment, columns);
-    }
-
-    @Override
-    public LanternaPanel createPanel() {
-        return createPanel(createBorderLayout());
-    }
-
-    @Override
-    public LanternaPanel createPanel(Layout layout) {
-        if (!(layout instanceof AbstractLanternaLayout)) {
-            throw new IllegalArgumentException("Incompatible layout type: " + layout.getClass().getSimpleName());
+    private AbstractLanternaContainer checkContainer(Container container) {
+        if (!(container instanceof AbstractLanternaContainer)) {
+            throw new IllegalArgumentException("Incompatible container type: " + container.getClass().getSimpleName());
         }
-        return new LanternaPanel(environment, (AbstractLanternaLayout)layout);
+        return (AbstractLanternaContainer)container;
+    }
+
+    @Override
+    public LanternaBorderContainer createBorderContainer() {
+        return new LanternaBorderContainer(environment);
+    }
+
+    @Override
+    public LanternaVerticalContainer createVerticalContainer() {
+        return new LanternaVerticalContainer(environment);
+    }
+
+    @Override
+    public LanternaHorizontalContainer createHorizontalContainer() {
+        return new LanternaHorizontalContainer(environment);
+    }
+
+    @Override
+    public LanternaFreeContainer createFreeContainer() {
+        return new LanternaFreeContainer(environment);
     }
 
     @Override
@@ -74,17 +65,17 @@ public class LanternaFactory implements Factory {
     }
 
     @Override
-    public Label createLabel(String label) {
+    public LanternaLabel createLabel(String label) {
         return new LanternaLabel(environment, label);
     }
 
     @Override
-    public Label createLabel(Text labelContent) {
+    public LanternaLabel createLabel(Text labelContent) {
         return new LanternaLabel(environment, labelContent);
     }
 
     @Override
-    public TextField createTextField() {
+    public LanternaTextField createTextField() {
         return new LanternaTextField(environment);
     }
 

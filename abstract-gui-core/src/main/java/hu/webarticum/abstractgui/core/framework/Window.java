@@ -5,7 +5,7 @@ public interface Window extends EnvironmentMember, Listenable {
     
     public void open();
     
-    public Panel getRootPanel();
+    public Container getRootContainer();
     
     public void refresh();
     

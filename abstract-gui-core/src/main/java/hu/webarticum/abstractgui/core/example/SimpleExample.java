@@ -5,17 +5,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import hu.webarticum.abstractgui.core.framework.BorderLayout;
+import hu.webarticum.abstractgui.core.framework.BorderContainer;
 import hu.webarticum.abstractgui.core.framework.Button;
 import hu.webarticum.abstractgui.core.framework.Environment;
 import hu.webarticum.abstractgui.core.framework.Event;
 import hu.webarticum.abstractgui.core.framework.EventListener;
 import hu.webarticum.abstractgui.core.framework.Factory;
+import hu.webarticum.abstractgui.core.framework.FreeContainer;
 import hu.webarticum.abstractgui.core.framework.Label;
-import hu.webarticum.abstractgui.core.framework.LinearLayout;
 import hu.webarticum.abstractgui.core.framework.Metrics;
-import hu.webarticum.abstractgui.core.framework.Panel;
 import hu.webarticum.abstractgui.core.framework.TextField;
+import hu.webarticum.abstractgui.core.framework.VerticalContainer;
 import hu.webarticum.abstractgui.core.framework.Window;
 import hu.webarticum.abstractgui.core.framework.text.FormattedText;
 import hu.webarticum.abstractgui.core.framework.text.HtmlText;
@@ -66,11 +66,10 @@ public class SimpleExample implements Runnable {
     	localizedRepository.setLocale(hu);
     	
         final Factory factory = environment.getFactory();
-        final Window window = factory.createWindow(localizedRepository.getDynamic("windowtitle"));
-        final Panel panel = window.getRootPanel();
+        final BorderContainer container = factory.createBorderContainer();
+        final Window window = factory.createWindow(container, localizedRepository.getDynamic("windowtitle"));
         
-        final Panel topPanel = factory.createPanel();
-        topPanel.setLayout(factory.createLinearLayout(LinearLayout.Direction.VERTICAL));
+        final VerticalContainer topPanel = factory.createVerticalContainer();
         
         final Label topLabel = factory.createLabel(localizedRepository.getDynamic("toplabel"));
         final Button topButton1 = factory.createButton(localizedRepository.getDynamic("topbutton1"));
@@ -106,19 +105,19 @@ public class SimpleExample implements Runnable {
             
         });
         
-        final Panel centerPanel = factory.createPanel(factory.createAbsoluteLayout());
-        centerPanel.add(inputField, new Metrics(25, 25));
+        final FreeContainer centerContainer = factory.createFreeContainer();
+        centerContainer.add(inputField, new Metrics(25, 25));
 
         topPanel.add(topLabel);
         topPanel.add(topButton1);
         topPanel.add(topButton2);
         topPanel.add(topCounterButton);
         
-        panel.add(topPanel, BorderLayout.Location.TOP);
-        panel.add(aButton, BorderLayout.Location.LEFT);
-        panel.add(centerPanel, BorderLayout.Location.CENTER);
-        panel.add(anOtherButton, BorderLayout.Location.RIGHT);
-        panel.add(langSwitcherButton, BorderLayout.Location.BOTTOM);
+        container.addTop(topPanel);
+        container.addLeft(aButton);
+        container.addCenter(centerContainer);
+        container.addRight(anOtherButton);
+        container.addBottom(langSwitcherButton);
         
         window.open();
     }

@@ -12,25 +12,24 @@ import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public class LanternaWindow extends AbstractLanternaEnvironmentMember implements Window {
 
-    private Text titleContent;
+    private final Text titleContent;
     
-    private boolean isAttachedToScreen = false;
+    private BasicWindow basicWindow;
     
-    private BasicWindow basicWindow = null;
-    
-    private LanternaPanel rootPanel;
+    private AbstractLanternaContainer rootContainer;
     
     protected GeneralListenable generalListenable = new GeneralListenable();
+
+    private boolean isAttachedToScreen = false;
     
-    LanternaWindow(LanternaEnvironment environment, String title) {
-        this(environment, new PlainText(title));
+    LanternaWindow(LanternaEnvironment environment, AbstractLanternaContainer rootContainer, String title) {
+        this(environment, rootContainer, new PlainText(title));
     }
     
-    LanternaWindow(LanternaEnvironment environment, Text titleContent) {
+    LanternaWindow(LanternaEnvironment environment, AbstractLanternaContainer rootContainer, Text titleContent) {
         super(environment);
-        
         this.titleContent = titleContent;
-        rootPanel = environment.getFactory().createPanel();
+        this.rootContainer = rootContainer;
     }
     
     @Override
@@ -47,14 +46,14 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
     }
 
     @Override
-    public LanternaPanel getRootPanel() {
-        return rootPanel;
+    public AbstractLanternaContainer getRootContainer() {
+        return rootContainer;
     }
 
     @Override
     public void refresh() {
         basicWindow.setTitle(titleContent.toString());
-        rootPanel.refresh();
+        rootContainer.refresh();
     }
     
     @Override
@@ -71,13 +70,13 @@ public class LanternaWindow extends AbstractLanternaEnvironmentMember implements
     public void runListeners(Object eventType, Event event) {
         generalListenable.runListeners(eventType, event);
     }
-
+    
     public BasicWindow getNativeWindow() {
         if (basicWindow == null) {
             basicWindow = new BasicWindow(titleContent.toString());
-            basicWindow.setComponent(rootPanel.getNativeComponent());
+            basicWindow.setComponent(rootContainer.getNativeComponent());
         }
         return basicWindow;
     }
-
+    
 }

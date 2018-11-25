@@ -4,21 +4,17 @@ import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public interface Factory extends EnvironmentMember {
 
-    public Window createWindow(String title);
+    public Window createWindow(Container container, String title);
 
-    public Window createWindow(Text title);
+    public Window createWindow(Container container, Text title);
 
-    public AbsoluteLayout createAbsoluteLayout();
-    
-    public BorderLayout createBorderLayout();
+    public BorderContainer createBorderContainer();
 
-    public LinearLayout createLinearLayout(LinearLayout.Direction direction);
-    
-    public GridLayout createGridLayout(int columns);
-    
-    public Panel createPanel();
+    public VerticalContainer createVerticalContainer();
 
-    public Panel createPanel(Layout layout);
+    public HorizontalContainer createHorizontalContainer();
+
+    public FreeContainer createFreeContainer();
 
     public Button createButton(String label);
 

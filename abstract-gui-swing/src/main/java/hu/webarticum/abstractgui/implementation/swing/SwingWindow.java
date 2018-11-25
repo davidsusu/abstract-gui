@@ -15,22 +15,21 @@ public class SwingWindow extends AbstractSwingEnvironmentMember implements Windo
     
     private final JFrame frame;
     
-    private SwingPanel rootPanel;
+    private AbstractSwingContainer rootContainer;
 
     protected GeneralListenable generalListenable = new GeneralListenable();
     
-    SwingWindow(SwingEnvironment environment, String title) {
-        this(environment, new PlainText(title));
+    SwingWindow(SwingEnvironment environment, AbstractSwingContainer rootContainer, String title) {
+        this(environment, rootContainer, new PlainText(title));
     }
     
-    SwingWindow(SwingEnvironment environment, Text titleContent) {
+    SwingWindow(SwingEnvironment environment, AbstractSwingContainer rootContainer, Text titleContent) {
         super(environment);
-        
         this.titleContent = titleContent;
+        this.rootContainer = rootContainer;
         frame = new JFrame(titleContent.toString());
-        frame.setSize(300, 200);
-        rootPanel = environment.getFactory().createPanel();
-        frame.setContentPane(rootPanel.getNativeComponent());
+        frame.setSize(300, 200); // FIXME: window size
+        frame.setContentPane(rootContainer.getNativeComponent());
     }
     
     @Override
@@ -39,14 +38,14 @@ public class SwingWindow extends AbstractSwingEnvironmentMember implements Windo
     }
     
     @Override
-    public SwingPanel getRootPanel() {
-        return rootPanel;
+    public AbstractSwingContainer getRootContainer() {
+        return rootContainer;
     }
 
     @Override
     public void refresh() {
         frame.setTitle(titleContent.toString());
-        rootPanel.refresh();
+        rootContainer.refresh();
     }
 
     @Override

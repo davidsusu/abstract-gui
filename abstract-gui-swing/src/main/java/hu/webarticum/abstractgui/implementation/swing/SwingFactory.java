@@ -1,11 +1,8 @@
 package hu.webarticum.abstractgui.implementation.swing;
 
+import hu.webarticum.abstractgui.core.framework.Container;
 import hu.webarticum.abstractgui.core.framework.Environment;
 import hu.webarticum.abstractgui.core.framework.Factory;
-import hu.webarticum.abstractgui.core.framework.Label;
-import hu.webarticum.abstractgui.core.framework.Layout;
-import hu.webarticum.abstractgui.core.framework.LinearLayout;
-import hu.webarticum.abstractgui.core.framework.TextField;
 import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public class SwingFactory implements Factory {
@@ -22,46 +19,40 @@ public class SwingFactory implements Factory {
     }
 
     @Override
-    public SwingWindow createWindow(String title) {
-        return new SwingWindow(environment, title);
+    public SwingWindow createWindow(Container container, String title) {
+        return new SwingWindow(environment, checkContainer(container), title);
     }
 
     @Override
-    public SwingWindow createWindow(Text titleContent) {
-        return new SwingWindow(environment, titleContent);
-    }
-
-    @Override
-    public SwingAbsoluteLayout createAbsoluteLayout() {
-        return new SwingAbsoluteLayout(environment);
-    }
-
-    @Override
-    public SwingBorderLayout createBorderLayout() {
-        return new SwingBorderLayout(environment);
+    public SwingWindow createWindow(Container container, Text titleContent) {
+        return new SwingWindow(environment, checkContainer(container), titleContent);
     }
     
-    @Override
-    public SwingLinearLayout createLinearLayout(LinearLayout.Direction direction) {
-        return new SwingLinearLayout(environment, direction);
-    }
-
-    @Override
-    public SwingGridLayout createGridLayout(int columns) {
-        return new SwingGridLayout(environment, columns);
-    }
-
-    @Override
-    public SwingPanel createPanel() {
-        return createPanel(createBorderLayout());
-    }
-
-    @Override
-    public SwingPanel createPanel(Layout layout) {
-        if (!(layout instanceof AbstractSwingLayout)) {
-            throw new IllegalArgumentException("Incompatible layout type: " + layout.getClass().getSimpleName());
+    private AbstractSwingContainer checkContainer(Container container) {
+        if (!(container instanceof AbstractSwingContainer)) {
+            throw new IllegalArgumentException("Incompatible container type: " + container.getClass().getSimpleName());
         }
-        return new SwingPanel(environment, (AbstractSwingLayout)layout);
+        return (AbstractSwingContainer)container;
+    }
+
+    @Override
+    public SwingBorderContainer createBorderContainer() {
+        return new SwingBorderContainer(environment);
+    }
+
+    @Override
+    public SwingVerticalContainer createVerticalContainer() {
+        return new SwingVerticalContainer(environment);
+    }
+
+    @Override
+    public SwingHorizontalContainer createHorizontalContainer() {
+        return new SwingHorizontalContainer(environment);
+    }
+
+    @Override
+    public SwingFreeContainer createFreeContainer() {
+        return new SwingFreeContainer(environment);
     }
 
     @Override
@@ -75,18 +66,18 @@ public class SwingFactory implements Factory {
     }
 
     @Override
-    public Label createLabel(String label) {
+    public SwingLabel createLabel(String label) {
         return new SwingLabel(environment, label);
     }
 
     @Override
-    public Label createLabel(Text labelContent) {
+    public SwingLabel createLabel(Text labelContent) {
         return new SwingLabel(environment, labelContent);
     }
 
     @Override
-    public TextField createTextField() {
+    public SwingTextField createTextField() {
         return new SwingTextField(environment);
     }
-    
+
 }
