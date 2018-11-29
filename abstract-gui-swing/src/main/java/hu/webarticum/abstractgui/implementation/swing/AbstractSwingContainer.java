@@ -19,7 +19,7 @@ public abstract class AbstractSwingContainer extends AbstractSwingComponent impl
     }
 
     @Override
-    public List<AbstractSwingComponent>  getChildren() {
+    public List<AbstractSwingComponent> getChildren() {
         return new ArrayList<AbstractSwingComponent>(children);
     }
 

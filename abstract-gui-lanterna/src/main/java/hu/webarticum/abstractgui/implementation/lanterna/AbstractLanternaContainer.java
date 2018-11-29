@@ -19,7 +19,7 @@ public abstract class AbstractLanternaContainer extends AbstractLanternaComponen
     }
 
     @Override
-    public List<AbstractLanternaComponent>  getChildren() {
+    public List<AbstractLanternaComponent> getChildren() {
         return new ArrayList<AbstractLanternaComponent>(children);
     }
 
