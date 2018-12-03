@@ -6,7 +6,7 @@ import hu.webarticum.abstractgui.core.framework.Component;
 import hu.webarticum.abstractgui.core.framework.FreeContainer;
 import hu.webarticum.abstractgui.core.framework.Metrics;
 
-public class SwingFreeContainer extends AbstractSwingContainer implements FreeContainer {
+public class SwingFreeContainer extends AbstractStackedSwingContainer implements FreeContainer {
 
     public SwingFreeContainer(SwingEnvironment environment) {
         super(environment);
@@ -25,7 +25,7 @@ public class SwingFreeContainer extends AbstractSwingContainer implements FreeCo
         Dimension preferredSize = nativeComponent.getPreferredSize();
         panel.add(nativeComponent);
         nativeComponent.setBounds(metrics.x, metrics.y, preferredSize.width, preferredSize.height);
-        children.add(abstractComponent);
+        registerChild(abstractComponent);
     }
-    
+
 }

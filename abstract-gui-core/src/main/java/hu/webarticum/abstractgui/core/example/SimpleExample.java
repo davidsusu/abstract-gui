@@ -27,13 +27,21 @@ import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public class SimpleExample implements Runnable {
     
-	private final Environment environment;
+    private final Environment environment;
+    
+    private final BorderContainer container;
 	
-	
-	public SimpleExample(Environment environment) {
-		this.environment = environment;
-	}
-	
+
+    public SimpleExample(Environment environment) {
+        this.environment = environment;
+        this.container = null;
+    }
+
+    public SimpleExample(BorderContainer container) {
+        this.environment = container.getEnvironment();
+        this.container = container;
+    }
+    
 	
 	@Override
     public void run() {
@@ -66,8 +74,15 @@ public class SimpleExample implements Runnable {
     	localizedRepository.setLocale(hu);
     	
         final Factory factory = environment.getFactory();
-        final BorderContainer container = factory.createBorderContainer();
-        final Window window = factory.createWindow(container, localizedRepository.getDynamic("windowtitle"));
+        final BorderContainer wrapperContainer;
+        final Window window;
+        if (container == null) {
+            wrapperContainer = factory.createBorderContainer();
+            window = factory.createWindow(wrapperContainer, localizedRepository.getDynamic("windowtitle"));
+        } else {
+            wrapperContainer = container;
+            window = null;
+        }
         
         final VerticalContainer topPanel = factory.createVerticalContainer();
         
@@ -100,7 +115,11 @@ public class SimpleExample implements Runnable {
             @Override
             public void occured(Event event) {
             	localizedRepository.setLocale(localizedRepository.getLocale().equals(hu) ? en : hu);
-                window.refresh();
+            	if (window != null) {
+            	    window.refresh();
+            	} else {
+            	    wrapperContainer.refresh();
+            	}
             }
             
         });
@@ -113,13 +132,15 @@ public class SimpleExample implements Runnable {
         topPanel.add(topButton2);
         topPanel.add(topCounterButton);
         
-        container.addTop(topPanel);
-        container.addLeft(aButton);
-        container.addCenter(centerContainer);
-        container.addRight(anOtherButton);
-        container.addBottom(langSwitcherButton);
+        wrapperContainer.addTop(topPanel);
+        wrapperContainer.addLeft(aButton);
+        wrapperContainer.addCenter(centerContainer);
+        wrapperContainer.addRight(anOtherButton);
+        wrapperContainer.addBottom(langSwitcherButton);
         
-        window.open();
+        if (window != null) {
+            window.open();
+        }
     }
-    
+	
 }

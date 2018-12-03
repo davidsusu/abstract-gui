@@ -5,7 +5,7 @@ import javax.swing.BoxLayout;
 import hu.webarticum.abstractgui.core.framework.Component;
 import hu.webarticum.abstractgui.core.framework.VerticalContainer;
 
-public class SwingVerticalContainer extends AbstractSwingContainer implements VerticalContainer {
+public class SwingVerticalContainer extends AbstractStackedSwingContainer implements VerticalContainer {
 
     public SwingVerticalContainer(SwingEnvironment environment) {
         super(environment);
@@ -22,7 +22,7 @@ public class SwingVerticalContainer extends AbstractSwingContainer implements Ve
         AbstractSwingComponent abstractComponent = checkComponent(component);
         java.awt.Component nativeComponent = abstractComponent.getNativeComponent();
         panel.add(nativeComponent);
-        children.add(abstractComponent);
+        registerChild(abstractComponent);
     }
 
 }

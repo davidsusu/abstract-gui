@@ -6,7 +6,7 @@ import com.googlecode.lanterna.gui2.LinearLayout;
 import hu.webarticum.abstractgui.core.framework.Component;
 import hu.webarticum.abstractgui.core.framework.HorizontalContainer;
 
-public class LanternaHorizontalContainer extends AbstractLanternaContainer implements HorizontalContainer {
+public class LanternaHorizontalContainer extends AbstractStackedLanternaContainer implements HorizontalContainer {
 
     LanternaHorizontalContainer(LanternaEnvironment environment) {
         super(environment);
@@ -23,7 +23,7 @@ public class LanternaHorizontalContainer extends AbstractLanternaContainer imple
         AbstractLanternaComponent abstractComponent = checkComponent(component);
         com.googlecode.lanterna.gui2.Component nativeComponent = abstractComponent.getNativeComponent();
         panel.addComponent(nativeComponent);
-        children.add(abstractComponent);
+        registerChild(abstractComponent);
     }
 
 }

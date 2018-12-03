@@ -7,7 +7,7 @@ import hu.webarticum.abstractgui.core.framework.Component;
 import hu.webarticum.abstractgui.core.framework.FreeContainer;
 import hu.webarticum.abstractgui.core.framework.Metrics;
 
-public class LanternaFreeContainer extends AbstractLanternaContainer implements FreeContainer {
+public class LanternaFreeContainer extends AbstractStackedLanternaContainer implements FreeContainer {
 
     public LanternaFreeContainer(LanternaEnvironment environment) {
         super(environment);
@@ -28,7 +28,7 @@ public class LanternaFreeContainer extends AbstractLanternaContainer implements 
         int row = (int)Math.round((double)metrics.y / getEnvironment().getCharacterHeight());
         nativeComponent.setPosition(new TerminalPosition(column, row));
         nativeComponent.setSize(nativeComponent.getPreferredSize());
-        children.add(abstractComponent);
+        registerChild(abstractComponent);
     }
     
 }

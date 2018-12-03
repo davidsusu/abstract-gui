@@ -1,5 +1,10 @@
 package hu.webarticum.abstractgui.implementation.lanterna;
 
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+
 import com.googlecode.lanterna.gui2.BorderLayout;
 
 import hu.webarticum.abstractgui.core.framework.BorderContainer;
@@ -7,55 +12,73 @@ import hu.webarticum.abstractgui.core.framework.Component;
 
 public class LanternaBorderContainer extends AbstractLanternaContainer implements BorderContainer {
 
-    LanternaBorderContainer(LanternaEnvironment environment) {
+    private final Map<Location, BorderLayout.Location> locations =
+            new EnumMap<Location, BorderLayout.Location>(Location.class);
+
+    private final Map<Location, AbstractLanternaComponent> children =
+            new EnumMap<Location, AbstractLanternaComponent>(Location.class);
+
+    public LanternaBorderContainer(LanternaEnvironment environment) {
         super(environment);
         panel.setLayoutManager(new BorderLayout());
-    }
-
-    @Override
-    public void add(Component component, Object constraint) {
-        if (constraint == Location.TOP) {
-            addTop(component);
-        } else if (constraint == Location.LEFT) {
-            addLeft(component);
-        } else if (constraint == Location.RIGHT) {
-            addRight(component);
-        } else if (constraint == Location.BOTTOM) {
-            addBottom(component);
-        } else {
-            addCenter(component);
-        }
+        
+        locations.put(Location.TOP, BorderLayout.Location.TOP);
+        locations.put(Location.LEFT, BorderLayout.Location.LEFT);
+        locations.put(Location.CENTER, BorderLayout.Location.CENTER);
+        locations.put(Location.RIGHT, BorderLayout.Location.RIGHT);
+        locations.put(Location.BOTTOM, BorderLayout.Location.BOTTOM);
     }
 
     @Override
     public void addTop(Component component) {
-        addInternal(component, BorderLayout.Location.TOP);
+        add(component, Location.TOP);
     }
 
     @Override
     public void addLeft(Component component) {
-        addInternal(component, BorderLayout.Location.LEFT);
+        add(component, Location.LEFT);
     }
 
     @Override
     public void addCenter(Component component) {
-        addInternal(component, BorderLayout.Location.CENTER);
+        add(component, Location.CENTER);
     }
 
     @Override
     public void addRight(Component component) {
-        addInternal(component, BorderLayout.Location.RIGHT);
+        add(component, Location.RIGHT);
     }
 
     @Override
     public void addBottom(Component component) {
-        addInternal(component, BorderLayout.Location.BOTTOM);
+        add(component, Location.BOTTOM);
     }
-    
-    private void addInternal(Component component, BorderLayout.Location lanternaConstraint) {
+
+    @Override
+    public void add(Component component, Object constraint) {
         AbstractLanternaComponent abstractComponent = checkComponent(component);
-        panel.addComponent(abstractComponent.getNativeComponent(), lanternaConstraint);
-        children.add(abstractComponent);
+        remove(component);
+        Location targetLocation = constraint instanceof Location ? (Location)constraint : Location.CENTER;
+        com.googlecode.lanterna.gui2.Component nativeComponent = abstractComponent.getNativeComponent();
+        panel.addComponent(nativeComponent, locations.get(targetLocation));
+        children.put(targetLocation, abstractComponent);
     }
     
+    @Override
+    public List<AbstractLanternaComponent> getChildren() {
+        return new ArrayList<AbstractLanternaComponent>(children.values());
+    }
+    
+    @Override
+    public void remove(Component component) {
+        if (!(component instanceof AbstractLanternaComponent)) {
+            return;
+        }
+
+        AbstractLanternaComponent abstractComponent = (AbstractLanternaComponent)component;
+        com.googlecode.lanterna.gui2.Component nativeComponent = abstractComponent.getNativeComponent();
+        children.values().remove(component);
+        panel.removeComponent(nativeComponent);
+    }
+
 }

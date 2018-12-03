@@ -19,25 +19,15 @@ public abstract class AbstractSwingContainer extends AbstractSwingComponent impl
     }
 
     @Override
-    public List<AbstractSwingComponent> getChildren() {
-        return new ArrayList<AbstractSwingComponent>(children);
-    }
-
-    @Override
-    public void remove(Component component) {
-        if (component instanceof AbstractSwingComponent) {
-            panel.remove(((AbstractSwingComponent)component).getNativeComponent());
-        }
-        children.remove(component);
-    }
-
-    @Override
     public void refresh() {
-        for (AbstractSwingComponent component: children) {
+        for (AbstractSwingComponent component: getChildren()) {
             component.refresh();
         }
     }
     
+    @Override
+    public abstract List<AbstractSwingComponent> getChildren();
+
     @Override
     public JPanel getNativeComponent() {
         return panel;
