@@ -11,12 +11,12 @@ import hu.webarticum.abstractgui.core.framework.Environment;
 import hu.webarticum.abstractgui.core.framework.Event;
 import hu.webarticum.abstractgui.core.framework.EventListener;
 import hu.webarticum.abstractgui.core.framework.Factory;
+import hu.webarticum.abstractgui.core.framework.Frame;
 import hu.webarticum.abstractgui.core.framework.FreeContainer;
 import hu.webarticum.abstractgui.core.framework.Label;
 import hu.webarticum.abstractgui.core.framework.Metrics;
 import hu.webarticum.abstractgui.core.framework.TextField;
 import hu.webarticum.abstractgui.core.framework.VerticalContainer;
-import hu.webarticum.abstractgui.core.framework.Window;
 import hu.webarticum.abstractgui.core.framework.text.FormattedText;
 import hu.webarticum.abstractgui.core.framework.text.HtmlText;
 import hu.webarticum.abstractgui.core.framework.text.LocalizedMultilingualTextRepository;
@@ -45,6 +45,17 @@ public class SimpleExample implements Runnable {
 	
 	@Override
     public void run() {
+	    environment.invokeLater(new Runnable() {
+	        
+	        @Override
+	        public void run() {
+	            runInternal();
+	        }
+	        
+	    });
+	}
+	
+	private void runInternal() {
     	final Locale hu = new Locale("hu");
     	final Locale en = new Locale("en_US");
     	
@@ -75,13 +86,13 @@ public class SimpleExample implements Runnable {
     	
         final Factory factory = environment.getFactory();
         final BorderContainer wrapperContainer;
-        final Window window;
+        final Frame frame;
         if (container == null) {
             wrapperContainer = factory.createBorderContainer();
-            window = factory.createWindow(wrapperContainer, localizedRepository.getDynamic("windowtitle"));
+            frame = factory.createFrame(wrapperContainer, localizedRepository.getDynamic("windowtitle"));
         } else {
             wrapperContainer = container;
-            window = null;
+            frame = null;
         }
         
         final VerticalContainer topPanel = factory.createVerticalContainer();
@@ -115,8 +126,8 @@ public class SimpleExample implements Runnable {
             @Override
             public void occured(Event event) {
             	localizedRepository.setLocale(localizedRepository.getLocale().equals(hu) ? en : hu);
-            	if (window != null) {
-            	    window.refresh();
+            	if (frame != null) {
+            	    frame.refresh();
             	} else {
             	    wrapperContainer.refresh();
             	}
@@ -138,8 +149,8 @@ public class SimpleExample implements Runnable {
         wrapperContainer.addRight(anOtherButton);
         wrapperContainer.addBottom(langSwitcherButton);
         
-        if (window != null) {
-            window.open();
+        if (frame != null) {
+            frame.open();
         }
     }
 	

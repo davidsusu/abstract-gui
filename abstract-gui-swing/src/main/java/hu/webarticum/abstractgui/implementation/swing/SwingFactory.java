@@ -19,13 +19,13 @@ public class SwingFactory implements Factory {
     }
 
     @Override
-    public SwingWindow createWindow(Container container, String title) {
-        return new SwingWindow(environment, checkContainer(container), title);
+    public SwingFrame createFrame(Container container, String title) {
+        return new SwingFrame(environment, checkContainer(container), title);
     }
 
     @Override
-    public SwingWindow createWindow(Container container, Text titleContent) {
-        return new SwingWindow(environment, checkContainer(container), titleContent);
+    public SwingFrame createFrame(Container container, Text titleContent) {
+        return new SwingFrame(environment, checkContainer(container), titleContent);
     }
     
     private AbstractSwingContainer checkContainer(Container container) {

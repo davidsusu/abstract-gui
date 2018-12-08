@@ -9,7 +9,7 @@ import hu.webarticum.abstractgui.core.framework.Container;
 
 public abstract class AbstractLanternaContainer extends AbstractLanternaComponent implements Container {
 
-    protected final Panel panel = new com.googlecode.lanterna.gui2.Panel();
+    protected final Panel panel = new Panel();
     
     AbstractLanternaContainer(LanternaEnvironment environment) {
         super(environment);

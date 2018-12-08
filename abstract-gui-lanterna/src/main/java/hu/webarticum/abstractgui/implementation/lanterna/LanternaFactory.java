@@ -18,13 +18,13 @@ public class LanternaFactory implements Factory {
     }
 
     @Override
-    public LanternaWindow createWindow(Container container, String title) {
-        return new LanternaWindow(environment, checkContainer(container), title);
+    public LanternaFrame createFrame(Container container, String title) {
+        return new LanternaFrame(environment, checkContainer(container), title);
     }
 
     @Override
-    public LanternaWindow createWindow(Container container, Text titleContent) {
-        return new LanternaWindow(environment, checkContainer(container), titleContent);
+    public LanternaFrame createFrame(Container container, Text titleContent) {
+        return new LanternaFrame(environment, checkContainer(container), titleContent);
     }
 
     private AbstractLanternaContainer checkContainer(Container container) {

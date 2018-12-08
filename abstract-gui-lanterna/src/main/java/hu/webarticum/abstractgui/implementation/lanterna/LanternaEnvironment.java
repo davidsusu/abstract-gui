@@ -1,20 +1,29 @@
 package hu.webarticum.abstractgui.implementation.lanterna;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.gui2.DefaultWindowManager;
 import com.googlecode.lanterna.gui2.EmptySpace;
 import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
+import com.googlecode.lanterna.gui2.SeparateTextGUIThread;
+import com.googlecode.lanterna.gui2.TextGUI;
+import com.googlecode.lanterna.gui2.WindowShadowRenderer;
+import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.Terminal;
 
 import hu.webarticum.abstractgui.core.framework.Environment;
 
 public class LanternaEnvironment implements Environment {
     
     private final LanternaFactory factory = new LanternaFactory(this);
+    
+    private final AtomicBoolean running = new AtomicBoolean(false);
 
     private MultiWindowTextGUI gui = null;
     
@@ -65,19 +74,52 @@ public class LanternaEnvironment implements Environment {
 
     @Override
     public void invokeLater(Runnable runnable) {
+        start();
         getGui().getGUIThread().invokeLater(runnable);
     }
 
     @Override
     public void invokeAndWait(Runnable runnable) throws InterruptedException {
+        start();
         getGui().getGUIThread().invokeAndWait(runnable);
+    }
+    
+    public void start() {
+        if (running.compareAndSet(false, true)) {
+            // FIXME: proper status handling?
+            ((SeparateTextGUIThread)getGui().getGUIThread()).start();
+        }
+    }
+    
+    public void stop() {
+        if (running.compareAndSet(true, false)) {
+            // FIXME: proper status handling?
+            ((SeparateTextGUIThread)getGui().getGUIThread()).stop();
+        }
     }
 
     MultiWindowTextGUI getGui() {
         if (gui == null) {
+            final Terminal terminal;
             Screen screen;
             try {
-                screen = new TerminalScreen(new DefaultTerminalFactory().createTerminal());
+                terminal = new DefaultTerminalFactory().createTerminal();
+                screen = new TerminalScreen(terminal) {
+
+                    @Override
+                    public synchronized void refresh(RefreshType refreshType) throws IOException {
+                        super.refresh(refreshType);
+                        try {
+                            TerminalSize size = terminal.getTerminalSize();
+                            terminal.newTextGraphics().putString(0, size.getRows() - 1,
+                                "Switch between widows with ctrl(+shift)+w"
+                            );
+                        } catch (IOException e) {
+                            // nothing to do
+                        }
+                    }
+                    
+                };
             } catch (IOException e) {
                 return null;
             }
@@ -91,7 +133,30 @@ public class LanternaEnvironment implements Environment {
                 }
                 return null;
             }
-            gui = new MultiWindowTextGUI(screen, new DefaultWindowManager(), new EmptySpace(TextColor.ANSI.BLUE));
+            gui = new MultiWindowTextGUI(
+                new SeparateTextGUIThread.Factory(),
+                screen,
+                new DefaultWindowManager(),
+                new WindowShadowRenderer(),
+                new EmptySpace(TextColor.ANSI.BLUE)
+            );
+            gui.addListener(new TextGUI.Listener() {
+
+                @Override
+                public boolean onUnhandledKeyStroke(TextGUI textGUI, KeyStroke keyStroke) {
+                    boolean ctrl = keyStroke.isCtrlDown();
+                    boolean shift = keyStroke.isShiftDown();
+                    Character character = keyStroke.getCharacter();
+                    char ch = character == null ? Character.MIN_VALUE : character.charValue();
+                    if (ctrl && ch == 'w') {
+                        gui.cycleActiveWindow(shift);
+                        // TODO: while not same and focusable
+                        return true;
+                    }
+                    return false;
+                }
+                
+            });
         }
         return gui;
     }

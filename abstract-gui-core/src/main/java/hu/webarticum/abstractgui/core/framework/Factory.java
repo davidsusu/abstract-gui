@@ -4,9 +4,9 @@ import hu.webarticum.abstractgui.core.framework.text.Text;
 
 public interface Factory extends EnvironmentMember {
 
-    public Window createWindow(Container container, String title);
+    public Frame createFrame(Container container, String title);
 
-    public Window createWindow(Container container, Text title);
+    public Frame createFrame(Container container, Text title);
 
     public BorderContainer createBorderContainer();
 

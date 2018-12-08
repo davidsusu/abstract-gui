@@ -39,8 +39,8 @@ public class LocalizedMultilingualTextRepository implements LocalizedTextReposit
 		return multilingualTextRepository.get(key, locale);
 	}
 	
-	public DynamicLocalizedRepositoryText getDynamic(Object key) {
-		return new DynamicLocalizedRepositoryText(this, key);
+	public CachedLocalizedRepositoryText getDynamic(Object key) {
+		return new CachedLocalizedRepositoryText(this, key);
 	}
 	
 }
