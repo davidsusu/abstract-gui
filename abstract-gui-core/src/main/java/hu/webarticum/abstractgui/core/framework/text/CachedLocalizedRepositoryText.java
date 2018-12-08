@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class DynamicLocalizedRepositoryText implements LocalizedText {
+public class CachedLocalizedRepositoryText implements LocalizedText {
 
 	private final LocalizedTextRepository repository;
 
@@ -13,7 +13,7 @@ public class DynamicLocalizedRepositoryText implements LocalizedText {
 	private Map<Locale, LocalizedText> cache = new HashMap<Locale, LocalizedText>();
 	
 	
-	public DynamicLocalizedRepositoryText(LocalizedTextRepository repository, Object key) {
+	public CachedLocalizedRepositoryText(LocalizedTextRepository repository, Object key) {
 		this.repository = repository;
 		this.key = key;
 	}
@@ -41,6 +41,10 @@ public class DynamicLocalizedRepositoryText implements LocalizedText {
 	@Override
 	public Locale getLocale() {
 		return getText().getLocale();
+	}
+	
+	public void invalidate() {
+	    cache.clear();
 	}
 	
 	private LocalizedText getText() {
