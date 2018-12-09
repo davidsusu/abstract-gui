@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'signing'
+apply plugin: 'maven'
+
+sourceCompatibility = "1.7";
+targetCompatibility = "1.7";
+
+version = '0.1'
+
+repositories {
+    jcenter()
+}
+
+System.out.println(project.ext.abstractGuiAndroidPlatformJar)
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    
+    // XXX api does not work
+    compile project(':abstract-gui-core')
+    implementation files(project.ext.abstractGuiAndroidPlatformJar)
+    implementation fileTree(dir: project.ext.abstractGuiAndroidSupportJarDir, include: '*.jar')
+}
