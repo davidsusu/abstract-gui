@@ -6,5 +6,6 @@ This project is in its early stage, do not use in production.
 
 **Currently existing implementations:**
 
+- Android
 - Lanterna
 - Swing
